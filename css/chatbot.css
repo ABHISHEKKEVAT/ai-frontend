@@ -1,0 +1,59 @@
+/* CHATBOT */
+.chat-box {
+  /* background: white; */
+  padding: 0px;
+  border-radius: 10px;
+  margin: 20px auto;
+  width:100%;
+  /* max-width: 10000px; */
+}
+.chat-log {
+  height: 200px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 10px;
+  background: #fafafa;
+  margin-bottom: 10px;
+}
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+.input-row input {
+  flex: 1;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+}
+.input-row button {
+  padding: 12px 26px;       /* Bigger button */
+  font-size: 1rem;          /* Larger text */
+  border-radius: 8px;       /* Softer corners */
+  background: #1e88e5;      /* Your theme color */
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.input-row button:hover {
+  background: #1565c0;      /* Slightly darker on hover */
+  transform: scale(1.05);   /* Small hover animation */
+}
+.chat-btn:hover{
+	background:#1565c0;
+}
+.chat-btn{
+  position: fixed;
+  bottom:10px;
+  right: 10px;
+  background:#1e88e5;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 30px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+  transition:  2s ease-in-out;
+  text-decoration:none;
+}

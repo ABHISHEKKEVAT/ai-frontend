@@ -1,0 +1,83 @@
+/* ------------------------------
+   TABLET VIEW (Medium screens)
+   ------------------------------ */
+@media (max-width: 1024px) {
+  .three-column-header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .two-column-section {
+    flex-direction: column;
+  }
+
+  .left-box, .right-box {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .profile-photo {
+    width: 150px;
+  }
+  .hero-bg{
+	padding: 80px 30px;
+	padding-top:150px
+  }
+}
+
+/* ------------------------------
+   MOBILE VIEW (Small screens)
+   ------------------------------ */
+@media (max-width:768px){
+	.hero-bg p{
+	font-size:16px;
+	line-height:1.5em;
+}
+	.hero-bg{
+	padding: 50px 20px;
+	padding-top:140px;
+  }
+  .hero-bg h1{
+	  font-size:32px;
+  }
+  header{
+	      padding: 50px 20px;
+  }
+  .header-controls{
+	      right: 20px;
+		  top:40px;
+  }
+  main {
+  padding: 40px 20px;
+}
+  .menu-icon{
+	      top: 0px;
+    left: 20px;
+  }
+  .profile-photo {
+    width: 120px;
+  }
+
+  .three-column-header {
+    padding: 10px;
+  }
+
+  .two-column-section {
+    padding: 10px;
+  }
+
+  .card {
+    padding: 10px;
+    font-size: 14px;
+  }
+  section{
+	  padding: 20px;
+  }
+  footer {
+  padding: 20px 20px;
+  }
+  .inner-footer{
+	      display: block;
+		  text-align: center;
+  }
+}

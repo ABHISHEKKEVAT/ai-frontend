@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile</title>
+  <link rel="stylesheet" href="css/profile.css">
+</head>
+
+<body>
+
+<section class="profile-page">
+  <div class="profile-container">
+    <h2>My Profile</h2>
+
+    <div id="profileContent" class="profile-box">
+      Loading profile...
+    </div>
+
+    <form id="profileForm" onsubmit="return updateProfile(event)" class="profile-form">
+      <label>Name</label>
+      <input id="pfName" type="text" placeholder="Your Name">
+
+      <label>Profile Picture</label>
+      <input id="pfAvatar" type="file" accept="image/*">
+
+      <button type="submit" class="update-btn">Update Profile</button>
+    </form>
+
+    <button onclick="logout()" class="logout-btn">Logout</button>
+  </div>
+</section>
+
+<script>
+const API = "http://localhost:5000/api";
+
+async function loadProfile(){
+  const token = localStorage.getItem("token");
+  if(!token){
+    profileContent.innerHTML = "Please login first.";
+    return;
+  }
+
+  const res = await fetch(`${API}/users/me`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+
+  const user = await res.json();
+
+  profileContent.innerHTML = `
+    <p><strong>Name:</strong> ${user.name}</p>
+    <p><strong>Email:</strong> ${user.email}</p>
+    <p><strong>Role:</strong> ${user.role}</p>
+    ${user.avatar ? `<img src="http://localhost:5000${user.avatar}" width="120">` : ""}
+  `;
+
+  pfName.value = user.name;
+}
+
+async function updateProfile(e){
+  e.preventDefault();
+  const token = localStorage.getItem("token");
+
+  const formData = new FormData();
+  formData.append("name", pfName.value);
+  if(pfAvatar.files[0]) formData.append("avatar", pfAvatar.files[0]);
+
+  await fetch(`${API}/users/me`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData
+  });
+
+  alert("Profile updated");
+  loadProfile();
+}
+
+function logout(){
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  window.location.href = "index.html";
+}
+
+loadProfile();
+</script>
+
+</body>
+</html>

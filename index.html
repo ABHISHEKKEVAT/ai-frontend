@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI Employee Experience</title>
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/banner.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/dark.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/chatbot.css" />
+  <link rel="stylesheet" href="css/popup.css" />
+  <link rel="stylesheet" href="css/profile.css" />
+</head>
+
+<body>
+<div class="main-header">
+
+<!-- SIDEBAR -->
+<div class="menu-icon" onclick="toggleSidebar()">☰</div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+<div class="sidebar" id="sidebar">
+  <h2>Menu</h2>
+  <a href="#overview">Overview</a>
+  <a href="#benefits">Benefits</a>
+  <a href="#use-cases">Use Cases</a>
+  <a href="#implementation">Implementation</a>
+  <a href="#best-practices">Best Practices</a>
+  <a href="#chatbot">Chatbot</a>
+  <a href="#profile-section">Profile</a>
+  <a href="#admin-section">Admin</a>
+</div>
+
+<header>
+  <div class="header-controls">
+    <div class="toggle-switch" onclick="toggleDarkMode()"><div class="circle"></div></div>
+
+    <div class="profile">
+      <button class="profile-btn" onclick="toggleDropdown()">
+        <span class="profile-icon">👤</span> Profile
+      </button>
+
+      <div class="dropdown" id="dropdown">
+        <a href="profile.html">My Account</a>
+        <a href="#">Settings</a>
+        <a href="#" onclick="handleLogout()">Logout</a>
+      </div>
+    </div>
+
+    <button onclick="openPopup('login')">Login</button>
+    <button onclick="openPopup('signup')">Sign Up</button>
+  </div>
+
+  <a href="#chatbot" class="chat-btn" style="margin: 40px auto; display: block; width: max-content;">
+    Try the AI Chatbot
+  </a>
+</header>
+</div>
+
+<!-- Banner Section -->
+<div class="hero-bg">
+  <div class="inner-section">
+    <h1>AI for Employee Onboarding & Knowledge Sharing</h1>
+    <p>AI transforms onboarding and internal knowledge into a smooth, personalized experience.</p>
+    <p1>ABHISHEK</p1>
+  </div>
+</div>
+
+<main>
+
+<!-- CONTENT SECTIONS -->
+<section id="overview">
+  <h2>Overview</h2>
+  <p>Modern organizations generate huge amounts of information...</p>
+  <p>AI-powered assistants make information instantly searchable...</p>
+</section>
+
+<section id="benefits">
+  <h2>Key Benefits</h2>
+  <div class="grid">
+    <div class="card"><h3>Faster onboarding</h3><p>New hires get instant answers...</p></div>
+    <div class="card"><h3>Consistent information</h3><p>AI uses a single knowledge base...</p></div>
+    <div class="card"><h3>Reduced support load</h3><p>HR and IT save time...</p></div>
+    <div class="card"><h3>Personalized learning</h3><p>AI adapts to each employee...</p></div>
+  </div>
+</section>
+
+<section id="use-cases">
+  <h2>Use Cases</h2>
+  <div class="grid">
+    <div class="card"><h3>Onboarding Copilot</h3><p>Guides new hires...</p></div>
+    <div class="card"><h3>HR FAQ Bot</h3><p>Answers policy questions...</p></div>
+    <div class="card"><h3>IT Helpdesk</h3><p>Explains how to access systems...</p></div>
+    <div class="card"><h3>Project Knowledge</h3><p>Captures lessons learned...</p></div>
+  </div>
+</section>
+
+<section id="implementation">
+  <h2>How to Get Started</h2>
+  <ul>
+    <li>Centralize content</li>
+    <li>Define use cases</li>
+    <li>Choose AI tools</li>
+    <li>Pilot with a small group</li>
+    <li>Measure impact</li>
+  </ul>
+</section>
+
+<section id="best-practices">
+  <h2>Best Practices</h2>
+  <ul>
+    <li>Data security</li>
+    <li>Content quality</li>
+    <li>Transparency</li>
+    <li>Human in the loop</li>
+  </ul>
+</section>
+
+<!-- CHATBOT -->
+<section id="chatbot">
+  <h2>My Own AI Chatbot</h2>
+  <div class="chat-box">
+    <div class="chat-log" id="chatLog"></div>
+    <div class="input-row">
+      <input id="userInput" placeholder="Ask a question...">
+      <button onclick="sendMessage()">Send</button>
+    </div>
+  </div>
+</section>
+
+
+<!-- PROFILE SECTION (Corrected) -->
+<section id="profile-section" class="profile-page">
+  <div class="profile-container">
+    <aside class="profile-sidebar">
+      <h3>Account Overview</h3>
+      <div id="profileSummary">
+        <!-- Filled by JS -->
+      </div>
+      <hr>
+      <p><strong>Status:</strong> <span id="verifyStatus">Checking...</span></p>
+      <button id="resendVerifyBtn" style="margin-top:10px; display:none;" onclick="resendVerification()">
+        Resend verification email
+      </button>
+    </aside>
+
+    <div class="profile-box">
+      <h2>My Profile</h2>
+
+      <div id="profileContent" style="margin-bottom:20px;">
+        Loading profile...
+      </div>
+
+      <form id="profileForm" onsubmit="return updateProfile(event)" class="profile-form">
+        <label>Name</label>
+        <input id="pfName" type="text" placeholder="Your Name">
+
+        <label>Profile Picture</label>
+        <input id="pfAvatar" type="file" accept="image/*">
+
+        <button type="submit" class="update-btn">Update Profile</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- ADMIN SECTION -->
+<section id="admin-section" style="display:none;">
+  <h2>Admin Panel</h2>
+  <div id="userList"></div>
+</section>
+
+</main>
+
+<footer>
+  <div class="inner-footer">
+    <div>© 2026 — AI‑Powered Employee Experience</div>
+    <div id="clock"></div>
+  </div>
+</footer>
+
+<!-- POPUP -->
+<div class="popup-bg" id="popupBg">
+  <div class="popup">
+    <h2 id="popupTitle"></h2>
+
+    <!-- LOGIN FORM -->
+    <div id="loginForm" style="display:none;">
+      <input id="liEmail" type="email" placeholder="Email">
+      <input id="liPassword" type="password" placeholder="Password">
+      <button onclick="handleLogin()" style="width:100%;">Login</button>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div id="signupForm" style="display:none;">
+      <input id="suName" type="text" placeholder="Full Name">
+      <input id="suEmail" type="email" placeholder="Email">
+      <input id="suPassword" type="password" placeholder="Password">
+      <button onclick="handleSignup()" style="width:100%;">Sign Up</button>
+    </div>
+
+    <br>
+    <button onclick="closePopup()" style="background:#ccc; color:black; width:100%;">Close</button>
+  </div>
+</div>
+
+
+<script>
+const API = "http://localhost:5000/api";
+
+/* SIDEBAR */
+function toggleSidebar() {
+  document.getElementById("sidebar").classList.toggle("open");
+  document.getElementById("sidebarOverlay").classList.toggle("show");
+}
+
+/* DARK MODE */
+function toggleDarkMode(){ document.body.classList.toggle("dark"); }
+
+/* DROPDOWN */
+function toggleDropdown(){
+  const d=document.getElementById("dropdown");
+  d.style.display=d.style.display==="block"?"none":"block";
+}
+
+/* POPUP */
+function openPopup(type){
+  document.getElementById("popupBg").style.display="flex";
+  document.getElementById("popupTitle").textContent = type === "login" ? "Login" : "Sign Up";
+  document.getElementById("loginForm").style.display = type === "login" ? "block" : "none";
+  document.getElementById("signupForm").style.display = type === "signup" ? "block" : "none";
+}
+function closePopup(){
+   document.getElementById("popupBg").style.display="none"; }
+
+/* SIGNUP */
+async function handleSignup(){
+  const name = document.getElementById("suName").value;
+  const email = document.getElementById("suEmail").value;
+  const password = document.getElementById("suPassword").value;
+
+  const res = await fetch(`${API}/auth/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ name, email, password })
+  });
+
+  const data = await res.json();
+  alert(data.msg || "Signup successful");
+}
+
+/*forgot*/
+function openForgotPopup(){
+  document.getElementById("forgotBg").style.display = "flex";
+}
+function closeForgotPopup(){
+  document.getElementById("forgotBg").style.display = "none";
+}
+
+async function handleForgot(){
+  const email = document.getElementById("fpEmail").value;
+  const res = await fetch(`${API}/auth/forgot`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email })
+  });
+  const data = await res.json();
+  alert(data.msg || "If that email exists, a reset link was sent.");
+}
+
+
+/* LOGIN */
+async function handleLogin(){
+  const email = document.getElementById("liEmail").value;
+  const password = document.getElementById("liPassword").value;
+
+  const res = await fetch(`${API}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password })
+  });
+
+  const data = await res.json();
+
+  if(res.ok){
+    localStorage.setItem("token", data.token);
+    localStorage.setItem("user", JSON.stringify(data.user));
+    alert("Login successful");
+    closePopup();
+    loadProfile();
+    loadAdminPanel();
+  } else {
+    alert(data.msg || "Login failed");
+  }
+}
+
+
+/* LOGOUT */
+function handleLogout(){
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+  profileContent.innerHTML = "Please login to see your profile.";
+  document.getElementById("admin-section").style.display = "none";
+}
+
+/* LOAD PROFILE */
+async function loadProfile(){
+  const token = localStorage.getItem("token");
+  if(!token){
+    profileContent.innerHTML = "Please login to see your profile.";
+    document.getElementById("verifyStatus").textContent = "Not logged in";
+    document.getElementById("resendVerifyBtn").style.display = "none";
+    return;
+  }
+
+  const res = await fetch(`${API}/users/me`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+
+  const user = await res.json();
+
+  profileContent.innerHTML = `
+    <p><strong>Name:</strong> ${user.name}</p>
+    <p><strong>Email:</strong> ${user.email}</p>
+    <p><strong>Role:</strong> ${user.role}</p>
+    ${user.avatar ? `<img src="http://localhost:5000${user.avatar}" width="120">` : ""}
+  `;
+
+  document.getElementById("profileSummary").innerHTML = `
+    <p>${user.name}</p>
+    <p>${user.email}</p>
+    <p>Role: ${user.role}</p>
+  `;
+
+  if (user.isVerified) {
+    document.getElementById("verifyStatus").textContent = "Verified ✅";
+    document.getElementById("resendVerifyBtn").style.display = "none";
+  } else {
+    document.getElementById("verifyStatus").textContent = "Not verified ❌";
+    document.getElementById("resendVerifyBtn").style.display = "inline-block";
+  }
+
+  pfName.value = user.name;
+}
+ 
+
+/* UPDATE PROFILE */
+async function updateProfile(e){
+  e.preventDefault();
+  const token = localStorage.getItem("token");
+
+  const formData = new FormData();
+  formData.append("name", pfName.value);
+  if(pfAvatar.files[0]) formData.append("avatar", pfAvatar.files[0]);
+
+  await fetch(`${API}/users/me`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: formData
+  });
+
+  alert("Profile updated");
+  loadProfile();
+}
+/* verify*/
+async function resendVerification(){
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  if (!user.email) return alert("No user email found");
+
+  const res = await fetch(`${API}/auth/resend-verify`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email: user.email })
+  });
+
+  const data = await res.json();
+  alert(data.msg || "Verification email sent");
+}
+
+/* ADMIN PANEL */
+async function loadAdminPanel(){
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  if(user.role !== "admin") return;
+
+  document.getElementById("admin-section").style.display = "block";
+
+  const res = await fetch(`${API}/users/all`, {
+    headers: { Authorization: `Bearer ${token}` }
+  });
+
+  const users = await res.json();
+
+  userList.innerHTML = users.map(u => `
+    <p>${u.name} — ${u.email} — ${u.role}</p>
+  `).join("");
+}
+
+/* CHATBOT */
+function sendMessage(){
+  const input=document.getElementById("userInput");
+  const log=document.getElementById("chatLog");
+  const text=input.value.trim();
+  if(!text) return;
+
+  log.innerHTML+=`<div><strong>You:</strong> ${text}</div>`;
+
+  setTimeout(()=>{
+    log.innerHTML+=`<div><strong>AI:</strong> ${getAIResponse(text)}</div>`;
+    log.scrollTop=log.scrollHeight;
+  },400);
+
+  input.value="";
+}
+
+function getAIResponse(q){
+  q=q.toLowerCase().trim();
+  if(q==="hello") return "Hello! How can I help you today?";
+  if(q==="hi") return "Hi! What would you like to know?";
+  if(q==="good morning") return "Good morning! What would you like to know?";
+  if(q==="good evening") return "Good evening! How may I help you today?";
+  if(q==="hey") return "Hey! How can I assist you?";
+  if(q.includes("leave")) return "You can request leave through the HR portal.";
+  if(q.includes("benefits")) return "You can view your benefits in the HR system.";
+  if(q.includes("onboarding")) return "Onboarding includes training, setup, and team introductions.";
+  if(q.includes("abhishek")) return "hello sir , how may i help you";
+  if(q.includes("rimal")) return "hello rimal , do you wanna join my company?";
+  return "This is a demo response showing how AI can answer internal questions instantly.";
+}
+
+/* CLOCK */
+function updateClock(){ document.getElementById("clock").textContent=new Date().toLocaleString(); }
+setInterval(updateClock,1000); updateClock();
+
+/* INITIAL LOAD */
+window.addEventListener("load", () => {
+  loadProfile();
+  loadAdminPanel();
+});
+</script>
+
+</body>
+</html>
