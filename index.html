@@ -210,17 +210,14 @@
     <button onclick="closePopup()" style="background:#ccc; color:black; width:100%;">Close</button>
   </div>
 </div>
-
-
 <script>
-const API = "https://ai-backend-1-7kxh.onrender.com";
+const API = "https://ai-backend-1-7kxh.onrender.com/api";
 
 /* SIDEBAR */
 function toggleSidebar() {
   document.getElementById("sidebar").classList.toggle("open");
   document.getElementById("sidebarOverlay").classList.toggle("show");
 }
-
 /* DARK MODE */
 function toggleDarkMode(){ document.body.classList.toggle("dark"); }
 
@@ -246,7 +243,8 @@ async function handleSignup(){
   const email = document.getElementById("suEmail").value;
   const password = document.getElementById("suPassword").value;
 
-  const res = await fetch(`${API}/auth/signup`, {
+  const res = await fetch(`${API}/auth/register`, {
+
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ name, email, password })
@@ -330,7 +328,8 @@ async function loadProfile(){
     <p><strong>Name:</strong> ${user.name}</p>
     <p><strong>Email:</strong> ${user.email}</p>
     <p><strong>Role:</strong> ${user.role}</p>
-    ${user.avatar ? `<img src="http://localhost:5000${user.avatar}" width="120">` : ""}
+    ${user.avatar ? `<img src="https://ai-backend-1-7kxh.onrender.com${user.avatar}" width="120">
+` : ""}
   `;
 
   document.getElementById("profileSummary").innerHTML = `
@@ -348,8 +347,12 @@ async function loadProfile(){
   }
 
   pfName.value = user.name;
+
+  // SHOW ADMIN PANEL IF ADMIN
+  if (user.role === "admin") {
+    document.getElementById("admin-section").style.display = "block";
+  }
 }
- 
 
 /* UPDATE PROFILE */
 async function updateProfile(e){

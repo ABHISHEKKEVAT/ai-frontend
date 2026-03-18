@@ -31,7 +31,8 @@
 </section>
 
 <script>
-const API = "https://ai-backend-1-7kxh.onrender.com";
+const API = "https://ai-backend-1-7kxh.onrender.com/api";
+
 
 async function loadProfile(){
   const token = localStorage.getItem("token");
@@ -50,7 +51,8 @@ async function loadProfile(){
     <p><strong>Name:</strong> ${user.name}</p>
     <p><strong>Email:</strong> ${user.email}</p>
     <p><strong>Role:</strong> ${user.role}</p>
-    ${user.avatar ? `<img src="http://localhost:5000${user.avatar}" width="120">` : ""}
+    ${user.avatar ? `<img src="https://ai-backend-1-7kxh.onrender.com${user.avatar}" width="120">
+` : ""}
   `;
 
   pfName.value = user.name;
