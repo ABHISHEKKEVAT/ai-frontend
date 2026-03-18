@@ -26,3 +26,7 @@ header p1 {
   font-size: 5rem;
   opacity: 6;
 }
+.header-controls button {
+  z-index: 9999;
+  position: relative;
+}

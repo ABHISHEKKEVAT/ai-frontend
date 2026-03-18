@@ -187,8 +187,8 @@
 </footer>
 
 <!-- POPUP -->
-<div class="popup-bg" id="popupBg">
-  <div class="popup">
+<div class="popup-bg" id="popupBg" onclick="closePopup()">
+  <div class="popup" onclick="event.stopPropagation()">
     <h2 id="popupTitle"></h2>
 
     <!-- LOGIN FORM -->
@@ -196,6 +196,8 @@
       <input id="liEmail" type="email" placeholder="Email">
       <input id="liPassword" type="password" placeholder="Password">
       <button onclick="handleLogin()" style="width:100%;">Login</button>
+      console.log("Login button clicked");
+
     </div>
 
     <!-- SIGNUP FORM -->
