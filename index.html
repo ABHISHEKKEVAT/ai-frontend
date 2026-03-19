@@ -245,7 +245,8 @@ async function handleSignup(){
   const email = document.getElementById("suEmail").value;
   const password = document.getElementById("suPassword").value;
 
-  const res = await fetch(`${API}/auth/register`, {
+  const res = await fetch(`${API}/auth/signup`, {
+
 
     method: "POST",
     headers: { "Content-Type": "application/json" },
