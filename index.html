@@ -228,6 +228,17 @@ function toggleDropdown(){
   const d=document.getElementById("dropdown");
   d.style.display=d.style.display==="block"?"none":"block";
 }
+document.addEventListener("click", function (event) {
+  const dropdown = document.getElementById("dropdown");
+  const profileBtn = document.querySelector(".profile-btn");
+
+  // If dropdown is open AND click is outside both dropdown and button → close it
+  if (dropdown.style.display === "block" &&
+      !dropdown.contains(event.target) &&
+      !profileBtn.contains(event.target)) {
+    dropdown.style.display = "none";
+  }
+});
 
 /* POPUP */
 function openPopup(type){
