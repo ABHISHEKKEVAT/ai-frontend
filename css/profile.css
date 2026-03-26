@@ -68,7 +68,10 @@
   grid-template-columns: 260px 1fr;
   gap: 20px;
 }
-
+.profile-banner{
+  position: center;
+  margin: 12px;
+}
 .profile-box,
 .profile-sidebar {
   background: #fff;
