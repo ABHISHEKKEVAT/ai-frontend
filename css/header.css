@@ -6,6 +6,12 @@
   z-index: 1000;;
   overflow: visible;
 }
+.main-header,
+header,
+.header-controls,
+.profile {
+  overflow: visible;
+}
 header {
   background: #000000;
   color: #ffffff;
