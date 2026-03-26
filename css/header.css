@@ -19,8 +19,9 @@ header,
 header {
   background: transparent;
   color: #ffffff;
-  padding: 10px 30px;
+  padding: 0px;
   position: relative;
+  margin-top: 1px;
 }
 
 header h1 {

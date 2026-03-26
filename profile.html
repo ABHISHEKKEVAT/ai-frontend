@@ -10,11 +10,12 @@
   <link rel="stylesheet" href="css/sidebar.css" />
   <link rel="stylesheet" href="css/profile.css" />
   <link rel="stylesheet" href="css/popup.css" />
+  <link rel="stylesheet" href="css/dark.css" />
 </head>
 
 <body>
   <div class="main-header">
-    <div class="profile-banner">Welcome to your account</div>
+    <div class="profile-banner"></div>
 
     <div class="menu-icon" onclick="toggleSidebar()">☰</div>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
@@ -53,32 +54,41 @@
   </div>
 
   <section class="profile-page">
-    <div class="profile-container">
-      <aside class="profile-sidebar">
-        <h3>Account Overview</h3>
-        <div id="profileSummary"></div>
-        <hr>
+    <div class="profile-wrapper">
+
+      <!-- LEFT CARD -->
+      <div class="overview-card">
+        <h2>Account Overview</h2>
+        <p id="overviewName">Loading...</p>
+        <p id="overviewEmail"></p>
+        <p><strong>Role:</strong> <span id="overviewRole"></span></p>
+        <hr />
         <p><strong>Status:</strong> <span id="verifyStatus">Checking...</span></p>
-        <button id="resendVerifyBtn" style="display:none;" onclick="resendVerification()">
-          Resend verification
-        </button>
-      </aside>
+      </div>
 
-      <div class="profile-box">
-        <h2>My Profile</h2>
-        <div id="profileContent">Loading...</div>
+      <!-- RIGHT CARD -->
+      <div class="profile-card">
+        <h1>My Profile</h1>
 
-        <form id="profileForm" onsubmit="return updateProfile(event)" class="profile-form">
+        <div id="profileContent"></div>
+
+        <div class="profile-image-preview">
+          <img id="profilePreview" src="https://via.placeholder.com/70" alt="Profile Preview">
+        </div>
+
+        <form id="profileForm" onsubmit="return updateProfile(event)">
           <label for="pfName">Name</label>
-          <input id="pfName" type="text" placeholder="Your Name">
+          <input type="text" id="pfName" />
 
           <label for="pfAvatar">Profile Picture</label>
-          <input id="pfAvatar" type="file" accept="image/*">
+          <input type="file" id="pfAvatar" accept="image/*" />
 
           <button type="submit" class="update-btn">Update Profile</button>
-          <button type="button" class="logout-btn" onclick="handleLogout()">Logout</button>
         </form>
+
+        <button class="logout-btn" onclick="handleLogout()">Logout</button>
       </div>
+
     </div>
   </section>
 
@@ -92,6 +102,19 @@
 
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
+
+      if (document.body.classList.contains("dark")) {
+        localStorage.setItem("theme", "dark");
+      } else {
+        localStorage.setItem("theme", "light");
+      }
+    }
+
+    function applySavedTheme() {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark");
+      }
     }
 
     function handleLogout() {
@@ -104,10 +127,13 @@
     async function loadProfile() {
       const token = localStorage.getItem("token");
       const profileContent = document.getElementById("profileContent");
-      const profileSummary = document.getElementById("profileSummary");
       const verifyStatus = document.getElementById("verifyStatus");
-      const resendVerifyBtn = document.getElementById("resendVerifyBtn");
       const pfName = document.getElementById("pfName");
+
+      const overviewName = document.getElementById("overviewName");
+      const overviewEmail = document.getElementById("overviewEmail");
+      const overviewRole = document.getElementById("overviewRole");
+      const profilePreview = document.getElementById("profilePreview");
 
       if (!token) {
         alert("Please login first");
@@ -130,23 +156,23 @@
           <p><strong>Name:</strong> ${user.name}</p>
           <p><strong>Email:</strong> ${user.email}</p>
           <p><strong>Role:</strong> ${user.role}</p>
-          ${user.avatar ? `<img src="https://ai-backend-1-7kxh.onrender.com${user.avatar}" width="120" class="profile-photo">` : ""}
         `;
 
-        profileSummary.innerHTML = `
-          <p>${user.name}</p>
-          <p>${user.email}</p>
-          <p>Role: ${user.role}</p>
-        `;
+        overviewName.textContent = user.name || "";
+        overviewEmail.textContent = user.email || "";
+        overviewRole.textContent = user.role || "";
 
         pfName.value = user.name || "";
 
+        if (user.avatar) {
+          const imageUrl = `https://ai-backend-1-7kxh.onrender.com${user.avatar}`;
+          profilePreview.src = imageUrl;
+        }
+
         if (user.isVerified) {
           verifyStatus.textContent = "Verified ✅";
-          resendVerifyBtn.style.display = "none";
         } else {
           verifyStatus.textContent = "Not verified ❌";
-          resendVerifyBtn.style.display = "inline-block";
         }
       } catch (error) {
         console.error(error);
@@ -189,28 +215,19 @@
       return false;
     }
 
-    async function resendVerification() {
-      const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const pfAvatar = document.getElementById("pfAvatar");
+    const profilePreview = document.getElementById("profilePreview");
 
-      if (!user.email) {
-        alert("No user email found");
-        return;
+    pfAvatar.addEventListener("change", function () {
+      const file = this.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          profilePreview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
       }
-
-      try {
-        const res = await fetch(`${API}/auth/resend-verify`, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email: user.email })
-        });
-
-        const data = await res.json();
-        alert(data.msg || "Verification email sent");
-      } catch (error) {
-        console.error(error);
-        alert("Failed to resend verification email");
-      }
-    }
+    });
 
     const profileBtn = document.getElementById("profileBtn");
     const dropdown = document.getElementById("dropdown");
@@ -228,7 +245,10 @@
       dropdown.classList.remove("show");
     });
 
-    window.addEventListener("load", loadProfile);
+    window.addEventListener("load", () => {
+      applySavedTheme();
+      loadProfile();
+    });
   </script>
 </body>
 </html>
