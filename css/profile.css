@@ -23,15 +23,16 @@
 .dropdown {
   position: absolute;
   top: calc(100% + 8px);
-  right: 0;
+  left: 0;
+  right: auto;
   min-width: 180px;
   background: #ffffff;
   border: 1px solid #e5eaf2;
   border-radius: 10px;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
   display: none;
-  z-index: 9999;
-  overflow: hidden;
+  z-index: 99999;
+  overflow: visible;
 }
 
 .dropdown.show {
@@ -45,6 +46,7 @@
   color: #333;
   font-size: 14px;
   transition: 0.2s ease;
+  white-space: nowrap;
 }
 
 .dropdown a:hover {
