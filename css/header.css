@@ -19,7 +19,7 @@ header,
 header {
   background: transparent;
   color: #ffffff;
-  padding: 0px;
+  padding: 0;
   position: relative;
   margin-top: 1px;
 }
@@ -27,7 +27,7 @@ header {
 header h1 {
   font-size: 2.4rem;
   margin-bottom: 10px;
-  color: white;
+  color: #ffffff;
 }
 
 header p {
@@ -45,6 +45,6 @@ header p {
 }
 
 .header-controls button {
-  z-index: 9999;
   position: relative;
+  z-index: 9999;
 }

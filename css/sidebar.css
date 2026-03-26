@@ -1,20 +1,25 @@
 /* SIDEBAR */
 .sidebar {
-  width: 200px;
-  height: 100%;
-  background: #1e88e5;
-  color: white;
   position: fixed;
-  top: 0px;
+  top: 0;
   left: -260px;
-  padding: 70px 10px;
-  transition: left 0.2s ease-in-out;
   z-index: 9999;
-  box-shadow: 3px 0 10px rgba(0,0,0,0.25);
   display: flex;
   flex-direction: column;
   gap: 10px;
+  width: 200px;
+  height: 100%;
+  padding: 70px 10px;
+  background: #1e88e5;
+  color: #ffffff;
+  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.25);
+  transition: left 0.2s ease-in-out;
 }
+
+.sidebar.open {
+  left: 0;
+}
+
 .sidebar h2 {
   margin-bottom: 10px;
   font-size: 1.4rem;
@@ -22,11 +27,11 @@
 }
 
 .sidebar a {
-  color: white;
+  display: block;
+  padding: 8px 0;
+  color: #ffffff;
   text-decoration: none;
   font-size: 1.1rem;
-  padding: 8px 0;
-  display: block;
   transition: 0.2s;
 }
 
@@ -35,36 +40,35 @@
   opacity: 0.9;
 }
 
-.sidebar.open {
-  left: 0;
-}
-/* DARK OVERLAY */
+/* OVERLAY */
 .sidebar-overlay {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 999;
+  display: none;
   width: 100%;
   height: 100%;
   background: rgba(77, 64, 197, 0.45);
-  display: none;
-  z-index: 999;
   backdrop-filter: blur(2px);
 }
 
 .sidebar-overlay.show {
   display: block;
 }
+
+/* MENU ICON */
 .menu-icon {
   position: fixed;
   top: 9px;
   left: 10px;
+  z-index: 10000;
   font-size: 28px;
   cursor: pointer;
   color: rgb(24, 1, 1);
-  z-index: 10000; /* FIXED */
 }
 
-/* SHIFT PAGE CONTENT WHEN SIDEBAR OPENS */
+/* PAGE SHIFT */
 body.sidebar-open header,
 body.sidebar-open main,
 body.sidebar-open footer {

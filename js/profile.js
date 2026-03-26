@@ -2,64 +2,110 @@ import { API } from "./api.js";
 
 export async function loadProfile() {
   const token = localStorage.getItem("token");
+  if (!token) return;
 
-  if (!token) {
-    alert("Login first");
-    window.location.href = "index.html";
-    return;
-  }
+  const profileContent = document.getElementById("profileContent");
+  const overviewName = document.getElementById("overviewName");
+  const overviewEmail = document.getElementById("overviewEmail");
+  const overviewRole = document.getElementById("overviewRole");
+  const verifyStatus = document.getElementById("verifyStatus");
+  const pfName = document.getElementById("pfName");
+  const profilePreview = document.getElementById("profilePreview");
 
-  const res = await fetch(`${API}/users/me`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
+  try {
+    const res = await fetch(`${API}/users/me`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
 
-  const user = await res.json();
+    if (!res.ok) {
+      throw new Error("Failed to load profile");
+    }
 
-  // LEFT CARD
-  document.getElementById("overviewName").textContent = user.name;
-  document.getElementById("overviewEmail").textContent = user.email;
-  document.getElementById("overviewRole").textContent = user.role;
+    const user = await res.json();
 
-  document.getElementById("verifyStatus").textContent =
-    user.isVerified ? "Verified ✅" : "Not Verified ❌";
+    if (profileContent) {
+      profileContent.innerHTML = `
+        <p><strong>Name:</strong> ${user.name}</p>
+        <p><strong>Email:</strong> ${user.email}</p>
+        <p><strong>Role:</strong> ${user.role}</p>
+      `;
+    }
 
-  // RIGHT CARD
-  document.getElementById("profileContent").innerHTML = `
-    <p><strong>Name:</strong> ${user.name}</p>
-    <p><strong>Email:</strong> ${user.email}</p>
-    <p><strong>Role:</strong> ${user.role}</p>
-  `;
+    if (overviewName) overviewName.textContent = user.name || "";
+    if (overviewEmail) overviewEmail.textContent = user.email || "";
+    if (overviewRole) overviewRole.textContent = user.role || "";
+    if (verifyStatus) {
+      verifyStatus.textContent = user.isVerified ? "Verified ✅" : "Not Verified ❌";
+    }
+    if (pfName) pfName.value = user.name || "";
 
-  document.getElementById("pfName").value = user.name;
+    if (profilePreview && user.avatar) {
+      profilePreview.src = `https://ai-backend-1-7kxh.onrender.com${user.avatar}`;
+    }
+  } catch (error) {
+    console.error("Profile load error:", error);
 
-  if (user.avatar) {
-    document.getElementById("profilePreview").src =
-      "https://ai-backend-1-7kxh.onrender.com" + user.avatar;
+    if (profileContent) {
+      profileContent.innerHTML = "Failed to load profile.";
+    }
   }
 }
 
-/* UPDATE PROFILE */
-document.getElementById("profileForm").addEventListener("submit", async (e) => {
-  e.preventDefault();
+export function initProfileForm() {
+  const profileForm = document.getElementById("profileForm");
+  const pfAvatar = document.getElementById("pfAvatar");
+  const profilePreview = document.getElementById("profilePreview");
 
-  const token = localStorage.getItem("token");
-  const name = document.getElementById("pfName").value;
-  const avatar = document.getElementById("pfAvatar").files[0];
+  if (pfAvatar && profilePreview) {
+    pfAvatar.addEventListener("change", () => {
+      const file = pfAvatar.files?.[0];
+      if (!file) return;
 
-  const formData = new FormData();
-  formData.append("name", name);
-  if (avatar) formData.append("avatar", avatar);
-
-  const res = await fetch(`${API}/users/me`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
-    body: formData
-  });
-
-  if (res.ok) {
-    alert("Profile updated");
-    loadProfile();
-  } else {
-    alert("Update failed");
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        profilePreview.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    });
   }
-});
+
+  if (!profileForm) return;
+
+  profileForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    const pfName = document.getElementById("pfName");
+    const pfAvatarInput = document.getElementById("pfAvatar");
+
+    if (!token || !pfName) {
+      alert("Profile form is not ready");
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append("name", pfName.value);
+
+    if (pfAvatarInput?.files?.[0]) {
+      formData.append("avatar", pfAvatarInput.files[0]);
+    }
+
+    try {
+      const res = await fetch(`${API}/users/me`, {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}` },
+        body: formData
+      });
+
+      if (!res.ok) {
+        throw new Error("Update failed");
+      }
+
+      alert("Profile updated");
+      await loadProfile();
+    } catch (error) {
+      console.error("Profile update error:", error);
+      alert("Profile update failed");
+    }
+  });
+}

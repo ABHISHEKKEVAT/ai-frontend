@@ -1,6 +1,4 @@
-/* ------------------------------
-   TABLET VIEW (Medium screens)
-   ------------------------------ */
+/* TABLET VIEW */
 @media (max-width: 1024px) {
   .three-column-header {
     flex-direction: column;
@@ -11,7 +9,8 @@
     flex-direction: column;
   }
 
-  .left-box, .right-box {
+  .left-box,
+  .right-box {
     width: 100%;
     margin-bottom: 20px;
   }
@@ -19,41 +18,47 @@
   .profile-photo {
     width: 150px;
   }
-  .hero-bg{
-	padding: 80px 30px;
-	padding-top:150px
+
+  .hero-bg {
+    padding: 80px 30px 0;
+    padding-top: 150px;
   }
 }
 
-/* ------------------------------
-   MOBILE VIEW (Small screens)
-   ------------------------------ */
-@media (max-width:768px){
-	.hero-bg p{
-	font-size:16px;
-	line-height:1.5em;
-}
-	.hero-bg{
-	padding: 50px 20px;
-	padding-top:140px;
+/* MOBILE VIEW */
+@media (max-width: 768px) {
+  .hero-bg {
+    padding: 50px 20px 0;
+    padding-top: 140px;
   }
-  .hero-bg h1{
-	  font-size:32px;
+
+  .hero-bg h1 {
+    font-size: 32px;
   }
-  header{
-	      padding: 50px 20px;
+
+  .hero-bg p {
+    font-size: 16px;
+    line-height: 1.5em;
   }
-  .header-controls{
-	      right: 20px;
-		  top:40px;
+
+  header {
+    padding: 50px 20px;
   }
+
+  .header-controls {
+    top: 40px;
+    right: 20px;
+  }
+
   main {
-  padding: 40px 20px;
-}
-  .menu-icon{
-	      top: 0px;
+    padding: 40px 20px;
+  }
+
+  .menu-icon {
+    top: 0;
     left: 20px;
   }
+
   .profile-photo {
     width: 120px;
   }
@@ -70,14 +75,17 @@
     padding: 10px;
     font-size: 14px;
   }
-  section{
-	  padding: 20px;
+
+  section {
+    padding: 20px;
   }
+
   footer {
-  padding: 20px 20px;
+    padding: 20px;
   }
-  .inner-footer{
-	      display: block;
-		  text-align: center;
+
+  .inner-footer {
+    display: block;
+    text-align: center;
   }
 }
