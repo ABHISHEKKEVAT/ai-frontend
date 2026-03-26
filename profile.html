@@ -1,89 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Profile</title>
-  <link rel="stylesheet" href="css/profile.css">
+
+  <!-- CSS Files -->
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/header.css" />
+  <link rel="stylesheet" href="css/sidebar.css" />
+  <link rel="stylesheet" href="css/profile.css" />
+  <link rel="stylesheet" href="css/popup.css" />
 </head>
 
 <body>
 
-<section class="profile-page">
-  <div class="profile-container">
-    <h2>My Profile</h2>
+<!-- HEADER + SIDEBAR -->
+<div class="main-header">
+  <div class="profile-banner">welcome to your account</div>
 
-    <div id="profileContent" class="profile-box">
-      Loading profile...
+  <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+  <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+
+  <div class="sidebar" id="sidebar">
+    <h2>Menu</h2>
+    <a href="/ai-frontend/index.html#overview">Overview</a>
+    <a href="/ai-frontend/index.html#benefits">Benefits</a>
+    <a href="/ai-frontend/index.html#use-cases">Use Cases</a>
+    <a href="/ai-frontend/index.html#implementation">Implementation</a>
+    <a href="/ai-frontend/index.html#best-practices">Best Practices</a>
+    <a href="/ai-frontend/index.html#chatbot">Chatbot</a>
+    <a href="/ai-frontend/profile.html">Profile</a>
+    <a href="/ai-frontend/index.html#admin-section">Admin</a>
+  </div>
+
+  <header>
+    <div class="header-controls">
+      <div class="toggle-switch" onclick="toggleDarkMode()"><div class="circle"></div></div>
+
+      <div class="profile">
+        <button class="profile-btn" onclick="toggleDropdown()">
+          <span class="profile-icon">👤</span> Profile
+        </button>
+
+        <div class="dropdown" id="dropdown">
+          <a href="/ai-frontend/profile.html">My Account</a>
+          <a href="#">Settings</a>
+          <a href="#" onclick="handleLogout()">Logout</a>
+        </div>
+      </div>
     </div>
+  </header>
+</div>
 
-    <form id="profileForm" onsubmit="return updateProfile(event)" class="profile-form">
+<!-- PROFILE PAGE CONTENT -->
+<div class="profile-container">
+  <aside class="profile-sidebar">
+    <h3>Account Overview</h3>
+    <div id="profileSummary"></div>
+    <hr>
+    <p><strong>Status:</strong> <span id="verifyStatus">Checking...</span></p>
+    <button id="resendVerifyBtn" style="display:none;" onclick="resendVerification()">Resend verification</button>
+  </aside>
+
+  <div class="profile-box">
+    <h2>My Profile</h2>
+    <div id="profileContent">Loading...</div>
+
+    <form id="profileForm" onsubmit="return updateProfile(event)">
       <label>Name</label>
-      <input id="pfName" type="text" placeholder="Your Name">
+      <input id="pfName" type="text">
 
       <label>Profile Picture</label>
       <input id="pfAvatar" type="file" accept="image/*">
 
-      <button type="submit" class="update-btn">Update Profile</button>
+      <button type="submit">Update Profile</button>
     </form>
-
-    <button onclick="logout()" class="logout-btn">Logout</button>
   </div>
-</section>
+</div>
 
-<script>
-const API = "https://ai-backend-1-7kxh.onrender.com/api";
-
-
-async function loadProfile(){
-  const token = localStorage.getItem("token");
-  if(!token){
-    profileContent.innerHTML = "Please login first.";
-    return;
-  }
-
-  const res = await fetch(`${API}/users/me`, {
-    headers: { Authorization: `Bearer ${token}` }
-  });
-
-  const user = await res.json();
-
-  profileContent.innerHTML = `
-    <p><strong>Name:</strong> ${user.name}</p>
-    <p><strong>Email:</strong> ${user.email}</p>
-    <p><strong>Role:</strong> ${user.role}</p>
-    ${user.avatar ? `<img src="https://ai-backend-1-7kxh.onrender.com${user.avatar}" width="120">
-` : ""}
-  `;
-
-  pfName.value = user.name;
-}
-
-async function updateProfile(e){
-  e.preventDefault();
-  const token = localStorage.getItem("token");
-
-  const formData = new FormData();
-  formData.append("name", pfName.value);
-  if(pfAvatar.files[0]) formData.append("avatar", pfAvatar.files[0]);
-
-  await fetch(`${API}/users/me`, {
-    method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
-    body: formData
-  });
-
-  alert("Profile updated");
-  loadProfile();
-}
-
-function logout(){
-  localStorage.removeItem("token");
-  localStorage.removeItem("user");
-  window.location.href = "index.html";
-}
-
-loadProfile();
-</script>
+<!-- JS FILES -->
 
 </body>
 </html>

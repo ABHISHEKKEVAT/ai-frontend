@@ -5,7 +5,7 @@
   background: #1e88e5;
   color: white;
   position: fixed;
-  top: 0;
+  top: 0px;
   left: -260px;
   padding: 70px 10px;
   transition: left 0.2s ease-in-out;
@@ -47,7 +47,7 @@
   height: 100%;
   background: rgba(77, 64, 197, 0.45);
   display: none;
-  z-index: 9998;
+  z-index: 999;
   backdrop-filter: blur(2px);
 }
 
@@ -56,8 +56,8 @@
 }
 .menu-icon {
   position: fixed;
-  top: 23px;
-  left: 30px;
+  top: 9px;
+  left: 10px;
   font-size: 28px;
   cursor: pointer;
   color: white;

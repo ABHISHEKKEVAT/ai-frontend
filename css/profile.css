@@ -1,58 +1,54 @@
+/* PROFILE DROPDOWN */
 .profile {
   position: relative;
-  display: inline-block;
 }
-
 .profile-btn {
-  background: #ffffff;
+  background: white;
   color: #1e88e5;
-  padding: 8px 16px;
-  border: 1px solid #dbe4f0;
+  padding: 6px 16px;
   border-radius: 8px;
   cursor: pointer;
-  font-size: 15px;
+  position: fixed;
+  top: 2px;
+  right: -0px;
+}
+/* Hide profile button on the profile page*/
+
+
+/*.header-controls::after {
+  content: "My Account";
+  color: white;
   font-weight: 600;
-  transition: 0.2s ease;
+  margin-left: 10px;
+}*/
+.profile-btn:hover{
+	background:#1e88e5;
+	color:#ffffff;
 }
-
-.profile-btn:hover {
-  background: #1e88e5;
-  color: #ffffff;
-}
-
 .dropdown {
   position: absolute;
-  top: calc(100% + 8px);
+  top: 40px;
   right: 0;
-  min-width: 180px;
-  background: #ffffff;
-  border: 1px solid #e5eaf2;
-  border-radius: 10px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
   display: none;
-  z-index: 9999;
-  overflow: hidden;
+  width: 150px;
 }
-
-.dropdown.show {
-  display: block;
-}
-
 .dropdown a {
   display: block;
-  padding: 12px 14px;
-  text-decoration: none;
+  padding: 10px;
   color: #333;
-  font-size: 14px;
-  transition: 0.2s ease;
+  text-decoration: none;
 }
-
 .dropdown a:hover {
-  background: #f3f7fc;
-  color: #1e88e5;
+  background: #eee;
 }
-
-/* profile page */
+.profile-photo {
+  width: 180px;
+  height: auto;
+  border-radius: 10px;
+}
 .profile-page {
   padding: 60px 20px;
   background: #f5f7fb;
@@ -67,11 +63,19 @@
   gap: 20px;
 }
 
-.profile-box,
+.profile-box {
+  background: #fff;
+  border-radius: 12px;
+  padding: 100px;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+}
+
 .profile-sidebar {
   background: #fff;
   border-radius: 12px;
-  padding: 20px;
+  
+  padding: 100px;
+  top: 10px;
   box-shadow: 0 4px 18px rgba(0,0,0,0.06);
 }
 
@@ -88,6 +92,22 @@
   margin-top: 10px;
   display: block;
 }
+.profile-banner {
+  text-align: center;
+ 
+}
+.back-home {
+  color: rgb(205, 10, 39);
+  background: #1e88e5;
+  padding: 8px 14px;
+  border-radius: 6px;
+  position: fixed;
+  text-decoration: none;
+  font-weight: 600;
+  margin-left: 60px;
+  top: 20px;
+}
+
 
 .profile-form input {
   width: 100%;
@@ -97,8 +117,7 @@
   border: 1px solid #d0d4e4;
 }
 
-.update-btn,
-.logout-btn {
+.update-btn {
   margin-top: 18px;
   width: 100%;
   padding: 12px;
@@ -110,11 +129,9 @@
   font-weight: 600;
 }
 
-.update-btn:hover,
-.logout-btn:hover {
+.update-btn:hover {
   background: #005fcc;
 }
-
 #admin-section {
   padding: 40px 20px;
   background: #f5f7fb;

@@ -1,14 +1,15 @@
 /* HEADER */
 .main-header{
-	    position: fixed;
-    top: 0;
-    width: 100%;
-	z-index:99;
+	position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;;
+  overflow: visible;
 }
 header {
   background: #000000;
   color: #ffffff;
-  padding: 40px 30px;
+  padding: 10px 30px;
   position: relative;
 }
 header h1 {

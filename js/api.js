@@ -1,0 +1,1 @@
+export const API = "https://ai-backend-1-7kxh.onrender.com/api";
