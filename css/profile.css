@@ -23,10 +23,22 @@
 .home-btn {
   background: #ffffff;
   color: #1e88e5;
-  padding: 8px 14px;
+  padding: 8px 15px;
+  cursor: pointer;
   border: 1px solid #dbe4f0;
   border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
   transition: 0.2s ease;
+  text-decoration: none;
+}
+.home {
+  position: relative;
+  display: inline-block;
+}
+.home-btn:hover {
+  background: #1e88e5;
+  color: #ffffff;
 }
 
 .dropdown {
