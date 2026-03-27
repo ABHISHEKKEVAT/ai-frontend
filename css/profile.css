@@ -19,6 +19,15 @@
   background: #1e88e5;
   color: #ffffff;
 }
+/* HOME BUTTON IN HEADER */
+.home-btn {
+  background: #ffffff;
+  color: #1e88e5;
+  padding: 8px 14px;
+  border: 1px solid #dbe4f0;
+  border-radius: 8px;
+  transition: 0.2s ease;
+}
 
 .dropdown {
   position: absolute;
