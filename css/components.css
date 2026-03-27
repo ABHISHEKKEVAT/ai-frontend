@@ -72,3 +72,9 @@ section ul {
   align-items: center;
   gap: 10px;
 }
+/* HOME BUTTON IN HEADER */
+.home-btn {
+  background: #ffffff;
+  color: #1e88e5;
+  padding: 8px 14px;
+}

@@ -59,7 +59,7 @@
 
 /* MENU ICON */
 .menu-icon {
-  position: fixed;
+  position: absolute;
   top: 9px;
   left: 10px;
   z-index: 10000;

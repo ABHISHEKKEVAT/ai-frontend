@@ -1,6 +1,6 @@
 /* HEADER */
 .main-header {
-  position: fixed;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -19,9 +19,9 @@ header,
 header {
   background: transparent;
   color: #ffffff;
-  padding: 0;
+  padding: 10px 30px;
   position: relative;
-  margin-top: 1px;
+  
 }
 
 header h1 {
@@ -37,13 +37,15 @@ header p {
 }
 
 .header-controls {
+  position: absolute;
+  top: 23px;
+  right: 30px;
   display: flex;
   justify-content: flex-end;
   align-items: center;
   gap: 14px;
   background: transparent;
 }
-
 .header-controls button {
   position: relative;
   z-index: 9999;
