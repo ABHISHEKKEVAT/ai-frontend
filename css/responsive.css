@@ -28,8 +28,8 @@
 /* MOBILE VIEW */
 @media (max-width: 768px) {
   .hero-bg {
-    padding: 50px 20px 0;
-    padding-top: 140px;
+    padding: 20px 20px 20px;
+    padding-top: 22px;
   }
 
   .hero-bg h1 {
@@ -48,6 +48,8 @@
   .header-controls {
     top: 40px;
     right: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
   }
 
   main {
@@ -78,6 +80,7 @@
 
   section {
     padding: 20px;
+    margin: 0px 6px 20px;
   }
 
   footer {
