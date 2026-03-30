@@ -11,14 +11,12 @@
   <link rel="stylesheet" href="css/profile.css" />
   <link rel="stylesheet" href="css/popup.css" />
   <link rel="stylesheet" href="css/dark.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
-
 <body>
   <div class="main-header">
-    <div class="profile-banner"></div>
-
-    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
-    <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
+    <div class="menu-icon" id="menuBtn" aria-label="Open menu" role="button" tabindex="0">☰</div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
 
     <div class="sidebar" id="sidebar">
       <h2>Menu</h2>
@@ -34,10 +32,9 @@
 
     <header>
       <div class="header-controls">
-         <!-- HOME BUTTON -->
-       <a href="index.html" class="home-btn">🏠 Back</a>
+        <a href="index.html" class="home-btn">🏠 Back</a>
 
-        <div class="toggle-switch" onclick="toggleDarkMode()">
+        <div class="toggle-switch" id="darkToggle" aria-label="Toggle dark mode" role="button" tabindex="0">
           <div class="circle"></div>
         </div>
 
@@ -48,210 +45,99 @@
 
           <div class="dropdown" id="dropdown">
             <a href="profile.html">My Account</a>
+            <a href="#" id="dropdownLoginLink">Login</a>
+            <a href="#" id="dropdownSignupLink">Sign Up</a>
             <a href="#">Settings</a>
-            <a href="#" onclick="handleLogout()">Logout</a>
+            <a href="#" id="logoutLink">Logout</a>
           </div>
         </div>
+
+        
       </div>
     </header>
   </div>
 
-  <section class="profile-page">
-    <div class="profile-wrapper">
-
-      <!-- LEFT CARD -->
-      <div class="overview-card">
-        <h2>Account Overview</h2>
-        <p id="overviewName">Loading...</p>
-        <p id="overviewEmail"></p>
-        <p><strong>Role:</strong> <span id="overviewRole"></span></p>
-        <hr />
-        <p><strong>Status:</strong> <span id="verifyStatus">Checking...</span></p>
-      </div>
-
-      <!-- RIGHT CARD -->
-      <div class="profile-card">
-        <h1>My Profile</h1>
-
-        <div id="profileContent"></div>
-
-        <div class="profile-image-preview">
-          <img id="profilePreview" src="https://via.placeholder.com/70" alt="Profile Preview">
+  <section class="profile-modern">
+    <div class="profile-container">
+      <div class="profile-top-card">
+        <div class="profile-avatar-block">
+          <div class="avatar-ring">
+            <img id="profilePreview" src="https://via.placeholder.com/160" alt="Profile Preview" />
+          </div>
         </div>
 
-        <form id="profileForm" onsubmit="return updateProfile(event)">
-          <label for="pfName">Name</label>
-          <input type="text" id="pfName" />
-
-          <label for="pfAvatar">Profile Picture</label>
-          <input type="file" id="pfAvatar" accept="image/*" />
-
-          <button type="submit" class="update-btn">Update Profile</button>
-        </form>
-
-        <button class="logout-btn" onclick="handleLogout()">Logout</button>
+        <div class="profile-intro">
+          <p class="profile-tag">MY ACCOUNT</p>
+          <h1 id="overviewName">Guest User</h1>
+          <p class="profile-role"><span id="overviewRole">Guest</span></p>
+          <p class="profile-email" id="overviewEmail"></p>
+          <div class="status-badge" id="verifyStatus">Not logged in</div>
+        </div>
       </div>
 
+      <div class="profile-grid">
+        <div class="profile-info-card">
+          <h2>About Profile</h2>
+          <div id="profileContent" class="profile-content-box">
+            <p>Please log in to view your profile.</p>
+          </div>
+
+          <div class="info-points">
+            <div class="info-item">
+              <span class="info-label">Design</span>
+              <span class="info-value">Clean UI</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Access</span>
+              <span class="info-value">Secure Account</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Profile</span>
+              <span class="info-value">Editable</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="profile-form-card">
+          <h2>Edit Profile</h2>
+
+          <form id="profileForm">
+            <label for="pfName">Full Name</label>
+            <input type="text" id="pfName" placeholder="Enter your full name" />
+
+            <label for="pfAvatar">Profile Picture</label>
+            <input type="file" id="pfAvatar" accept="image/*" />
+
+            <button type="submit" class="update-btn">Save Changes</button>
+          </form>
+
+          <button type="button" class="logout-btn" id="logoutBtn">Logout</button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <script>
-    const API = "https://ai-backend-1-7kxh.onrender.com/api";
+  <div class="popup-bg" id="popupBg">
+    <div class="popup popup-card" id="popupCard">
+      <h2 id="popupTitle"></h2>
 
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("open");
-      document.getElementById("sidebarOverlay").classList.toggle("show");
-    }
+      <div id="loginForm" style="display: none;">
+        <input id="liEmail" type="email" placeholder="Email" />
+        <input id="liPassword" type="password" placeholder="Password" />
+        <button type="button" id="loginSubmitBtn" class="popup-main-btn">Login</button>
+      </div>
 
-    function toggleDarkMode() {
-      document.body.classList.toggle("dark");
+      <div id="signupForm" style="display: none;">
+        <input id="suName" type="text" placeholder="Full Name" />
+        <input id="suEmail" type="email" placeholder="Email" />
+        <input id="suPassword" type="password" placeholder="Password" />
+        <button type="button" id="signupSubmitBtn" class="popup-main-btn">Sign Up</button>
+      </div>
 
-      if (document.body.classList.contains("dark")) {
-        localStorage.setItem("theme", "dark");
-      } else {
-        localStorage.setItem("theme", "light");
-      }
-    }
+      <button type="button" id="closePopupBtn" class="popup-close-btn">Close</button>
+    </div>
+  </div>
 
-    function applySavedTheme() {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        document.body.classList.add("dark");
-      }
-    }
-
-    function handleLogout() {
-      localStorage.removeItem("token");
-      localStorage.removeItem("user");
-      alert("Logged out successfully");
-      window.location.href = "index.html";
-    }
-
-    async function loadProfile() {
-      const token = localStorage.getItem("token");
-      const profileContent = document.getElementById("profileContent");
-      const verifyStatus = document.getElementById("verifyStatus");
-      const pfName = document.getElementById("pfName");
-
-      const overviewName = document.getElementById("overviewName");
-      const overviewEmail = document.getElementById("overviewEmail");
-      const overviewRole = document.getElementById("overviewRole");
-      const profilePreview = document.getElementById("profilePreview");
-
-      if (!token) {
-        alert("Please login first");
-        window.location.href = "index.html";
-        return;
-      }
-
-      try {
-        const res = await fetch(`${API}/users/me`, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
-
-        if (!res.ok) {
-          throw new Error("Failed to load profile");
-        }
-
-        const user = await res.json();
-
-        profileContent.innerHTML = `
-          <p><strong>Name:</strong> ${user.name}</p>
-          <p><strong>Email:</strong> ${user.email}</p>
-          <p><strong>Role:</strong> ${user.role}</p>
-        `;
-
-        overviewName.textContent = user.name || "";
-        overviewEmail.textContent = user.email || "";
-        overviewRole.textContent = user.role || "";
-
-        pfName.value = user.name || "";
-
-        if (user.avatar) {
-          const imageUrl = `https://ai-backend-1-7kxh.onrender.com${user.avatar}`;
-          profilePreview.src = imageUrl;
-        }
-
-        if (user.isVerified) {
-          verifyStatus.textContent = "Verified ✅";
-        } else {
-          verifyStatus.textContent = "Not verified ❌";
-        }
-      } catch (error) {
-        console.error(error);
-        profileContent.innerHTML = "Failed to load profile.";
-      }
-    }
-
-    async function updateProfile(e) {
-      e.preventDefault();
-
-      const token = localStorage.getItem("token");
-      const pfName = document.getElementById("pfName");
-      const pfAvatar = document.getElementById("pfAvatar");
-
-      const formData = new FormData();
-      formData.append("name", pfName.value);
-
-      if (pfAvatar.files[0]) {
-        formData.append("avatar", pfAvatar.files[0]);
-      }
-
-      try {
-        const res = await fetch(`${API}/users/me`, {
-          method: "POST",
-          headers: { Authorization: `Bearer ${token}` },
-          body: formData
-        });
-
-        if (!res.ok) {
-          throw new Error("Profile update failed");
-        }
-
-        alert("Profile updated");
-        loadProfile();
-      } catch (error) {
-        console.error(error);
-        alert("Profile update failed");
-      }
-
-      return false;
-    }
-
-    const pfAvatar = document.getElementById("pfAvatar");
-    const profilePreview = document.getElementById("profilePreview");
-
-    pfAvatar.addEventListener("change", function () {
-      const file = this.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = function (e) {
-          profilePreview.src = e.target.result;
-        };
-        reader.readAsDataURL(file);
-      }
-    });
-
-    const profileBtn = document.getElementById("profileBtn");
-    const dropdown = document.getElementById("dropdown");
-
-    profileBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      dropdown.classList.toggle("show");
-    });
-
-    dropdown.addEventListener("click", function (e) {
-      e.stopPropagation();
-    });
-
-    document.addEventListener("click", function () {
-      dropdown.classList.remove("show");
-    });
-
-    window.addEventListener("load", () => {
-      applySavedTheme();
-      loadProfile();
-    });
-  </script>
+  <script type="module" src="js/main.js"></script>
 </body>
 </html>

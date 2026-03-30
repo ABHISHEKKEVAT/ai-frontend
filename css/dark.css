@@ -54,7 +54,11 @@ body.dark .profile-btn {
 body.dark .profile-btn:hover {
   background-color: #1e88e5;
 }
+body.dark .home-btn {
+  background-color: #000000;
+  color: #ffffff;
 
+}
 /* HEADER BUTTONS */
 body.dark .header-controls button {
   background-color: #000000;

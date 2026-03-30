@@ -10,7 +10,7 @@ export function getAIResponse(text) {
   if (q.includes("benefits")) return "You can view your benefits in the HR system.";
   if (q.includes("onboarding")) return "Onboarding includes training, setup, and team introductions.";
   if (q.includes("abhishek")) return "Hello sir, how may I help you?";
-  if (q.includes("rimal")) return "Hello Rimal, do you want to join my company?";
+  if (q.includes("pratik")) return "Hello Pratik, do you want to join my company?";
 
   return "This is a demo response showing how AI can answer internal questions instantly.";
 }

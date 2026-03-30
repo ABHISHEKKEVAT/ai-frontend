@@ -28,17 +28,17 @@
 
 /* MAIN CONTENT */
 main {
-  padding: 40px 30px;
-  margin-top: 40px;
+  padding: 1px 10px;
+  margin-top: 20px;
 }
 
 section {
   max-width: 1100px;
-  margin: 0 auto 40px;
-  padding: 24px;
+  margin: 0 50px 20px;
+  padding: 10px;
   background: #1e88e529;
   border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(246, 247, 249, 0.06);
+  box-shadow: 30px 20px 20px rgba(246, 247, 249, 0.06);
 }
 
 section h2 {

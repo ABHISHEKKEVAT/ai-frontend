@@ -7,8 +7,10 @@ export async function loadAdmin() {
   const adminSection = document.getElementById("admin-section");
 
   if (!userList || !adminSection) return;
+
   if (!token || user.role !== "admin") {
     adminSection.style.display = "none";
+    userList.innerHTML = "";
     return;
   }
 
@@ -25,14 +27,11 @@ export async function loadAdmin() {
 
     adminSection.style.display = "block";
     userList.innerHTML = users
-      .map(
-        (u) => `
-          <p>${u.name} - ${u.email} - ${u.role}</p>
-        `
-      )
+      .map((u) => `<p>${u.name} - ${u.email} - ${u.role}</p>`)
       .join("");
   } catch (error) {
     console.error("Admin load error:", error);
+    adminSection.style.display = "block";
     userList.innerHTML = "<p>Failed to load users.</p>";
   }
 }

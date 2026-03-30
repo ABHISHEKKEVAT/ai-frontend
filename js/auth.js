@@ -33,7 +33,6 @@ export async function login() {
 
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
-
     alert("Login successful");
     return true;
   } catch (error) {
