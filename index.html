@@ -286,76 +286,6 @@
       }
     }
 
-    /* CHATBOT */
-    function sendMessage() {
-      const input = document.getElementById("userInput");
-      const log = document.getElementById("chatLog");
-      const text = input.value.trim();
-      if (!text) return;
-
-      log.innerHTML += `<div><strong>You:</strong> ${text}</div>`;
-
-      setTimeout(() => {
-        log.innerHTML += `<div><strong>AI:</strong> ${getAIResponse(text)}</div>`;
-        log.scrollTop = log.scrollHeight;
-      }, 400);
-
-      input.value = "";
-    }
-
-  function getAIResponse(q) {
-  q = q.toLowerCase().trim();
-
-  const responses = [
-    {
-      keywords: ["hello", "hi", "hey"],
-      reply: "Hello! How can I help you today?"
-    },
-    {
-      keywords: ["good morning"],
-      reply: "Good morning! What would you like to know?"
-    },
-    {
-      keywords: ["good evening"],
-      reply: "Good evening! How may I help you today?"
-    },
-    {
-      keywords: ["leave", "vacation", "holiday"],
-      reply: "You can request leave through the HR portal."
-    },
-    {
-      keywords: ["benefits", "salary", "insurance"],
-      reply: "You can view your benefits in the HR system."
-    },
-    {
-      keywords: ["onboarding", "training", "joining"],
-      reply: "Onboarding includes training, setup, and team introductions."
-    },
-    {
-      keywords: ["abhishek"],
-      reply: "Hello sir, how may I help you?"
-    },
-    {
-      keywords: ["rimal"],
-      reply: "Hello Rimal, do you want to join my company?"
-    },
-    {
-      keywords: ["pratik"],
-      reply: "Hello Pratik, how may I help you?"
-    }
-  ];
-
-  // Loop through all keyword groups
-  for (let item of responses) {
-    for (let word of item.keywords) {
-      if (q.includes(word)) {
-        return item.reply;
-      }
-    }
-  }
-
-  return "This is a demo response showing how AI can answer internal questions instantly.";
-}
     /* CLOCK */
     function updateClock() {
       document.getElementById("clock").textContent = new Date().toLocaleString();
@@ -384,6 +314,10 @@
     document.addEventListener("click", function () {
       dropdown.classList.remove("show");
     });
+  </script>
+  <script type="module">
+    import { sendMessage } from "./js/chatbot.js";
+    window.sendMessage = sendMessage;
   </script>
 </body>
 </html>
