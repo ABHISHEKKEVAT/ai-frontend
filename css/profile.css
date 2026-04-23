@@ -255,6 +255,12 @@
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
 }
 
+#profileForm input::placeholder,
+.popup-card input::placeholder {
+  color: #7b8ca6;
+  opacity: 1;
+}
+
 #profileForm input[type="text"]:focus,
 #profileForm input[type="file"]:focus {
   border-color: #1e88e5;
@@ -392,6 +398,7 @@
 #userList p {
   padding: 6px 0;
   border-bottom: 1px solid #eee;
+  color: #1f2933;
 }
 
 /* DARK MODE */
@@ -444,6 +451,10 @@ body.dark .status-badge {
   color: #8ec5ff;
 }
 
+body.dark .profile-tag {
+  color: #8ec5ff;
+}
+
 body.dark .dropdown {
   background: #1e1e1e;
   border: 1px solid #444;
@@ -468,7 +479,7 @@ body.dark .popup-card input {
 
 body.dark #profileForm input::placeholder,
 body.dark .popup-card input::placeholder {
-  color: #bdbdbd;
+  color: #b5c8e2;
 }
 
 body.dark .popup-close-btn {

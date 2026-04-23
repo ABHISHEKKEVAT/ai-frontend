@@ -65,7 +65,7 @@
         </div>
 
         <button class="btn-secondary" onclick="openPopup('login')">Login</button>
-        <button class="btn-primary" onclick="openPopup('signup')">Sign Up</button>
+        <button class="btn-secondary" onclick="openPopup('signup')">Sign Up</button>
       </div>
 
       <a href="#chatbot" class="chat-btn">
@@ -136,6 +136,7 @@
       <h2>My Own AI Chatbot</h2>
       <div class="chat-box">
         <div class="chat-log" id="chatLog"></div>
+        <div class="chat-suggestions" id="chatSuggestions"></div>
         <div class="input-row">
           <input id="userInput" placeholder="Ask a question...">
           <button onclick="sendMessage()">Send</button>
@@ -176,7 +177,7 @@
       </div>
 
       <br>
-      <button onclick="closePopup()" style="background:#ccc; color:black; width:100%;">Close</button>
+      <button onclick="closePopup()" style="width:100%;">Close</button>
     </div>
   </div>
 
@@ -252,6 +253,7 @@
           alert("Login successful");
           closePopup();
           loadAdminPanel();
+          if (window.refreshChatSuggestions) window.refreshChatSuggestions();
         } else {
           alert(data.msg || "Login failed");
         }
@@ -267,6 +269,7 @@
       localStorage.removeItem("user");
       document.getElementById("admin-section").style.display = "none";
       alert("Logged out successfully");
+      if (window.refreshChatSuggestions) window.refreshChatSuggestions();
     }
 
     /* ADMIN PANEL */
@@ -325,8 +328,10 @@
     });
   </script>
   <script type="module">
-    import { sendMessage } from "./js/chatbot.js";
+    import { sendMessage, initChatSuggestions, refreshChatSuggestions } from "./js/chatbot.js";
     window.sendMessage = sendMessage;
+    window.refreshChatSuggestions = refreshChatSuggestions;
+    initChatSuggestions();
   </script>
 </body>
 </html>

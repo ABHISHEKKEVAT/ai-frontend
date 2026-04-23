@@ -3,7 +3,6 @@
   top: 0;
   width: 100%;
   z-index: 1001;
-  backdrop-filter: blur(12px);
   background: rgba(250, 253, 255, 0.78);
   border-bottom: 1px solid var(--line);
 }
@@ -31,46 +30,43 @@ header {
 }
 
 .profile-btn {
-  border: 1px solid var(--line);
-  background: var(--surface);
-  color: var(--text);
-  padding: 10px 16px;
-  border-radius: 999px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(16, 36, 62, 0.08);
+  border: 1px solid var(--line, #d8e5ff);
+  background: var(--surface, #ffffff);
+  color: var(--text, #10243e);
 }
 
 .profile {
   position: relative;
+  z-index: 1500;
 }
 
-.dropdown {
+#dropdown {
   position: absolute;
   top: calc(100% + 12px);
   right: 0;
   min-width: 180px;
   padding: 10px;
-  background: var(--surface);
-  border: 1px solid var(--line);
+  background: var(--surface, #ffffff);
+  border: 1px solid var(--line, #d8e5ff);
   border-radius: 14px;
   box-shadow: var(--shadow);
   display: none;
+  z-index: 3000;
 }
 
-.dropdown.show {
+#dropdown.show {
   display: block;
 }
 
-.dropdown a {
+#dropdown a {
   display: block;
   padding: 10px 12px;
   border-radius: 10px;
-  text-decoration: none;
+  text-decoration: none !important;
   font-weight: 600;
-  color: var(--text);
+  color: var(--text, #10243e) !important;
 }
 
-.dropdown a:hover {
-  background: var(--surface-soft);
+#dropdown a:hover {
+  background: var(--surface-soft, #f7faff);
 }

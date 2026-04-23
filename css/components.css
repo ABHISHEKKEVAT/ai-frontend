@@ -56,9 +56,15 @@ section li {
   font-size: 1.04rem;
 }
 
+.card p,
+section li {
+  color: var(--muted);
+}
+
 .btn-primary,
 .btn-secondary,
 .header-controls button,
+.profile-btn,
 .home-btn {
   appearance: none;
   border: 1px solid transparent;
@@ -77,6 +83,7 @@ section li {
 
 .btn-secondary,
 .header-controls button,
+.profile-btn,
 .home-btn {
   background: #fff;
   color: var(--text);
@@ -86,6 +93,7 @@ section li {
 .btn-primary:hover,
 .btn-secondary:hover,
 .header-controls button:hover,
+.profile-btn:hover,
 .home-btn:hover {
   transform: translateY(-1px);
 }
@@ -95,12 +103,18 @@ section li {
   display: inline-block;
   width: max-content;
   text-decoration: none;
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(120deg, var(--primary), var(--primary-strong));
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  border: 1px solid transparent;
   padding: 10px 20px;
   border-radius: 999px;
   font-weight: 700;
+  box-shadow: 0 12px 24px rgba(10, 111, 113, 0.28);
+}
+
+.chat-btn:hover {
+  color: #fff;
+  filter: brightness(1.05);
 }
 
 @keyframes rise-in {

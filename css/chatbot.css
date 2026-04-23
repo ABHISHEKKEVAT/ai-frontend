@@ -12,6 +12,31 @@
   margin-bottom: 0;
   padding: 16px;
   background: linear-gradient(180deg, #f9fcff 0%, #f4f9ff 100%);
+  color: var(--text);
+}
+
+.chat-suggestions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: #fff;
+  border-top: 1px solid var(--line);
+}
+
+.chat-chip {
+  border: 1px solid var(--line);
+  background: var(--surface-soft);
+  color: var(--text);
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.chat-chip:hover {
+  background: #eaf4ff;
 }
 
 .input-row {
@@ -28,6 +53,8 @@
   border: 1px solid var(--line);
   border-radius: 12px;
   font-size: 0.98rem;
+  background: var(--surface);
+  color: var(--text);
 }
 
 .input-row button {

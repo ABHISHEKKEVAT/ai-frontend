@@ -26,13 +26,39 @@ body.dark {
   --surface-soft: #16324f;
   --text: #e8f0ff;
   --muted: #afc2df;
+  --placeholder: #9eb4d3;
   --line: #284361;
   --shadow: 0 22px 52px rgba(3, 9, 15, 0.45);
 
-  background: radial-gradient(circle at 16% 8%, #14385b 0%, transparent 32%),
+  background-image:
+    linear-gradient(rgba(7, 16, 27, 0.86), rgba(8, 23, 38, 0.9)),
+    radial-gradient(circle at 16% 8%, #14385b 0%, transparent 32%),
     radial-gradient(circle at 88% 20%, #17314a 0%, transparent 30%),
-    linear-gradient(160deg, #07101b 0%, #081726 48%, #0b1f33 100%);
+    var(--tech-bg);
+  background-size: auto, auto, auto, cover;
+  background-position: center, center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-attachment: scroll, scroll, scroll, fixed;
   color: var(--text);
+}
+
+body.dark a,
+body.dark button,
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark h5,
+body.dark h6 {
+  color: var(--text);
+}
+
+body.dark p,
+body.dark li,
+body.dark label,
+body.dark small,
+body.dark span {
+  color: var(--muted);
 }
 
 body.dark .toggle-switch {
@@ -62,9 +88,25 @@ body.dark .profile-btn {
   border-color: #2c4868;
 }
 
+body.dark .btn-secondary,
+body.dark .header-controls button,
+body.dark .home-btn {
+  background: #10233a;
+  color: #f3f8ff;
+  border-color: #2c4868;
+}
+
 body.dark .sidebar {
   background: linear-gradient(180deg, #12587a, #0c3f5c);
   color: #f4f9ff;
+}
+
+body.dark .sidebar a {
+  color: #f4f9ff;
+}
+
+body.dark .chat-btn {
+  color: #ffffff;
 }
 
 body.dark .dropdown {
@@ -72,10 +114,24 @@ body.dark .dropdown {
   border-color: #2c4868;
 }
 
+body.dark #dropdown a {
+  color: #e8f0ff !important;
+}
+
+body.dark #dropdown a:hover {
+  color: #ffffff !important;
+}
+
 body.dark section {
   background: var(--surface);
   color: var(--text);
   border: 1px solid var(--line);
+}
+
+body.dark section p,
+body.dark section li,
+body.dark .card p {
+  color: #c4d7f1;
 }
 
 body.dark .card {
@@ -87,6 +143,22 @@ body.dark .card {
 body.dark .chat-log {
   background: #0f2237;
   color: #e3efff;
+}
+
+body.dark .chat-suggestions,
+body.dark .input-row {
+  background: #10233a;
+  border-top-color: #2c4868;
+}
+
+body.dark .chat-chip {
+  background: #16324f;
+  color: #e8f0ff;
+  border-color: #2c4868;
+}
+
+body.dark .chat-chip:hover {
+  background: #1b3d5f;
 }
 
 body.dark .input-row input {
@@ -105,6 +177,10 @@ body.dark .popup input {
   background: #0f2034;
   color: #fff;
   border-color: #2c4868;
+}
+
+body.dark .popup button {
+  color: #e8f0ff;
 }
 
 body.dark .inner-footer {

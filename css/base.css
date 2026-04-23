@@ -10,6 +10,7 @@
   --surface-soft: #f7faff;
   --text: #10243e;
   --muted: #4b6585;
+  --placeholder: #667f9f;
   --primary: #0f8b8d;
   --primary-strong: #0a6f71;
   --accent: #ff7a59;
@@ -17,6 +18,7 @@
   --shadow: 0 22px 52px rgba(16, 36, 62, 0.12);
   --radius-lg: 24px;
   --radius-md: 16px;
+  --tech-bg: url("../assets/tech-bg.svg");
 }
 
 html {
@@ -25,14 +27,33 @@ html {
 
 body {
   font-family: "Plus Jakarta Sans", "Segoe UI", sans-serif;
-  background: radial-gradient(circle at 12% 8%, #d9e9ff 0%, transparent 35%),
+  background-image:
+    linear-gradient(rgba(245, 251, 255, 0.86), rgba(240, 248, 255, 0.9)),
+    radial-gradient(circle at 12% 8%, #d9e9ff 0%, transparent 35%),
     radial-gradient(circle at 88% 20%, #ddfff5 0%, transparent 32%),
-    linear-gradient(165deg, #f8fbff 0%, #edf2ff 55%, #f3faff 100%);
+    var(--tech-bg);
+  background-size: auto, auto, auto, cover;
+  background-position: center, center, center, center;
+  background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+  background-attachment: scroll, scroll, scroll, fixed;
   color: var(--text);
   line-height: 1.65;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
+}
+
+body,
+input,
+textarea,
+select,
+button {
+  color: var(--text);
+}
+
+::placeholder {
+  color: var(--placeholder);
+  opacity: 1;
 }
 
 h1,
@@ -44,4 +65,93 @@ h3 {
 
 a {
   color: inherit;
+}
+
+p,
+li,
+label,
+small,
+span {
+  color: inherit;
+}
+
+main p,
+main li,
+footer,
+.inner-footer {
+  color: var(--muted);
+}
+
+button,
+.chat-btn,
+.home-btn,
+.profile-btn,
+.popup-main-btn,
+.popup-close-btn,
+.update-btn,
+.logout-btn {
+  transition: transform 0.22s ease, box-shadow 0.22s ease, filter 0.22s ease,
+    background-color 0.22s ease, color 0.22s ease, border-color 0.22s ease;
+  animation: button-idle 3.2s ease-in-out infinite;
+  will-change: transform;
+}
+
+button:hover,
+.chat-btn:hover,
+.home-btn:hover,
+.profile-btn:hover,
+.popup-main-btn:hover,
+.popup-close-btn:hover,
+.update-btn:hover,
+.logout-btn:hover {
+  transform: translateY(-2px) scale(1.01);
+  box-shadow: 0 12px 24px rgba(16, 36, 62, 0.2);
+  filter: brightness(1.03);
+}
+
+button:active,
+.chat-btn:active,
+.home-btn:active,
+.profile-btn:active,
+.popup-main-btn:active,
+.popup-close-btn:active,
+.update-btn:active,
+.logout-btn:active {
+  transform: translateY(0) scale(0.98);
+}
+
+button:focus-visible,
+.chat-btn:focus-visible,
+.home-btn:focus-visible,
+.profile-btn:focus-visible,
+.popup-main-btn:focus-visible,
+.popup-close-btn:focus-visible,
+.update-btn:focus-visible,
+.logout-btn:focus-visible {
+  outline: 3px solid rgba(15, 139, 141, 0.28);
+  outline-offset: 2px;
+}
+
+@keyframes button-idle {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button,
+  .chat-btn,
+  .home-btn,
+  .profile-btn,
+  .popup-main-btn,
+  .popup-close-btn,
+  .update-btn,
+  .logout-btn {
+    animation: none;
+    transition: none;
+  }
 }
