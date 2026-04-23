@@ -1,19 +1,18 @@
-/* SIDEBAR */
 .sidebar {
   position: fixed;
   top: 0;
-  left: -260px;
+  left: -320px;
   z-index: 9999;
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  width: 200px;
+  gap: 8px;
+  width: 290px;
   height: 100%;
-  padding: 70px 10px;
-  background: #1e88e5;
+  padding: 96px 20px 24px;
+  background: linear-gradient(180deg, #0f8b8d, #0a6f71);
   color: #ffffff;
-  box-shadow: 3px 0 10px rgba(0, 0, 0, 0.25);
-  transition: left 0.2s ease-in-out;
+  box-shadow: 20px 0 40px rgba(16, 36, 62, 0.35);
+  transition: left 0.26s ease-in-out;
 }
 
 .sidebar.open {
@@ -21,26 +20,28 @@
 }
 
 .sidebar h2 {
-  margin-bottom: 10px;
-  font-size: 1.4rem;
-  font-weight: 600;
+  margin-bottom: 12px;
+  font-size: 1.45rem;
+  font-weight: 800;
 }
 
 .sidebar a {
   display: block;
-  padding: 8px 0;
+  padding: 10px 12px;
   color: #ffffff;
   text-decoration: none;
-  font-size: 1.1rem;
-  transition: 0.2s;
+  font-size: 0.98rem;
+  border-radius: 10px;
+  opacity: 0.95;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 
 .sidebar a:hover {
-  padding-left: 10px;
-  opacity: 0.9;
+  transform: translateX(4px);
+  background: rgba(255, 255, 255, 0.18);
+  opacity: 1;
 }
 
-/* OVERLAY */
 .sidebar-overlay {
   position: fixed;
   top: 0;
@@ -49,29 +50,28 @@
   display: none;
   width: 100%;
   height: 100%;
-  background: rgba(77, 64, 197, 0.45);
-  backdrop-filter: blur(2px);
+  background: rgba(11, 25, 44, 0.38);
+  backdrop-filter: blur(4px);
 }
 
 .sidebar-overlay.show {
   display: block;
 }
 
-/* MENU ICON */
 .menu-icon {
-  position: absolute;
-  top: 9px;
-  left: 10px;
+  position: fixed;
+  top: 16px;
+  left: 18px;
   z-index: 10000;
-  font-size: 28px;
+  font-size: 30px;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: 0 14px 24px rgba(16, 36, 62, 0.16);
   cursor: pointer;
-  color: rgb(24, 1, 1);
-}
-
-/* PAGE SHIFT */
-body.sidebar-open header,
-body.sidebar-open main,
-body.sidebar-open footer {
-  transform: translateX(250px);
-  transition: transform 0.35s ease;
+  color: var(--text);
 }

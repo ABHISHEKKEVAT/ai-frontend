@@ -1,31 +1,66 @@
-/* BANNER SECTION */
 .hero-bg {
-  padding-top: 50px;
-  padding-bottom: 20px;
-  margin-top: 50px;
-  background: linear-gradient(135deg, #2563eb, #4f46e5);
-  color: #ffffff;
+  margin: 26px auto 0;
+  max-width: 1220px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  padding: 72px 42px 42px;
+  background: linear-gradient(132deg, #0f8b8d 0%, #1282a2 48%, #1f6f8b 100%);
+  color: #f6fdff;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow);
 }
 
 .inner-section {
-  max-width: 1100px;
+  max-width: 960px;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.hero-bg::before,
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(2px);
+}
+
+.hero-bg::before {
+  width: 340px;
+  height: 340px;
+  background: rgba(255, 255, 255, 0.16);
+  top: -100px;
+  right: -70px;
+}
+
+.hero-bg::after {
+  width: 280px;
+  height: 280px;
+  background: rgba(255, 122, 89, 0.2);
+  left: -90px;
+  bottom: -120px;
 }
 
 .hero-bg h1 {
-  margin-bottom: 20px;
-  font-size: 45px;
-  font-weight: bold;
-  line-height: 1.21em;
+  margin-bottom: 18px;
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.1;
+  font-weight: 700;
 }
 
 .hero-bg p {
-  font-size: 19px;
-  line-height: 1.5em;
+  font-size: clamp(1rem, 2.1vw, 1.22rem);
+  line-height: 1.72;
+  opacity: 0.96;
 }
 
-body.dark .hero-bg {
-  background: linear-gradient(135deg, #0e0d0d, #1a237e);
-  color: #ffffff;
+.hero-bg p:last-child {
+  margin-top: 16px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: #ffddd4;
 }

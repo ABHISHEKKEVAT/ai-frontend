@@ -1,12 +1,11 @@
-/* HEADER */
 .main-header {
-  position: relative;
+  position: sticky;
   top: 0;
-  left: 0;
   width: 100%;
-  z-index: 1000;
-  overflow: visible;
-  background: transparent;
+  z-index: 1001;
+  backdrop-filter: blur(12px);
+  background: rgba(250, 253, 255, 0.78);
+  border-bottom: 1px solid var(--line);
 }
 
 .main-header,
@@ -17,36 +16,61 @@ header,
 }
 
 header {
-  background: transparent;
-  color: #ffffff;
-  padding: 10px 30px;
+  padding: 16px 24px;
   position: relative;
-  
-}
-
-header h1 {
-  font-size: 2.4rem;
-  margin-bottom: 10px;
-  color: #ffffff;
-}
-
-header p {
-  max-width: 650px;
-  font-size: 1.05rem;
-  opacity: 0.95;
+  max-width: 1220px;
+  margin: 0 auto;
 }
 
 .header-controls {
-  position: absolute;
-  top: 23px;
-  right: 30px;
-  display: flex;
+  position: static;
   justify-content: flex-end;
+  display: flex;
   align-items: center;
-  gap: 14px;
-  background: transparent;
+  gap: 12px;
 }
-.header-controls button {
+
+.profile-btn {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--text);
+  padding: 10px 16px;
+  border-radius: 999px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(16, 36, 62, 0.08);
+}
+
+.profile {
   position: relative;
-  z-index: 9999;
+}
+
+.dropdown {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  min-width: 180px;
+  padding: 10px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+  display: none;
+}
+
+.dropdown.show {
+  display: block;
+}
+
+.dropdown a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.dropdown a:hover {
+  background: var(--surface-soft);
 }

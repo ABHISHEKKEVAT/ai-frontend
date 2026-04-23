@@ -4,6 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>AI Employee Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
 
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/header.css" />
@@ -15,7 +21,6 @@
   <link rel="stylesheet" href="css/responsive.css" />
   <link rel="stylesheet" href="css/chatbot.css" />
   <link rel="stylesheet" href="css/popup.css" />
-  <link rel="stylesheet" href="css/profile.css" />
 </head>
 
 <body>
@@ -59,11 +64,11 @@
           </div>
         </div>
 
-        <button onclick="openPopup('login')">Login</button>
-        <button onclick="openPopup('signup')">Sign Up</button>
+        <button class="btn-secondary" onclick="openPopup('login')">Login</button>
+        <button class="btn-primary" onclick="openPopup('signup')">Sign Up</button>
       </div>
 
-      <a href="#chatbot" class="chat-btn" style="margin: 40px auto; display: block; width: max-content;">
+      <a href="#chatbot" class="chat-btn">
         Try the AI Chatbot
       </a>
     </header>

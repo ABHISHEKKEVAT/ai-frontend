@@ -1,10 +1,10 @@
-/* DARK MODE SWITCH */
 .toggle-switch {
   position: relative;
-  width: 50px;
-  height: 24px;
-  background: #ccc;
-  border-radius: 20px;
+  width: 54px;
+  height: 28px;
+  background: #dde6f5;
+  border-radius: 999px;
+  border: 1px solid var(--line);
   cursor: pointer;
 }
 
@@ -12,128 +12,103 @@
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
   background: #ffffff;
   border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(16, 36, 62, 0.18);
   transition: 0.3s;
 }
 
-/* DARK MODE GLOBAL */
 body.dark {
-  background: #121212;
-  color: #e5e5e5;
+  --bg: #091423;
+  --surface: #11253c;
+  --surface-soft: #16324f;
+  --text: #e8f0ff;
+  --muted: #afc2df;
+  --line: #284361;
+  --shadow: 0 22px 52px rgba(3, 9, 15, 0.45);
+
+  background: radial-gradient(circle at 16% 8%, #14385b 0%, transparent 32%),
+    radial-gradient(circle at 88% 20%, #17314a 0%, transparent 30%),
+    linear-gradient(160deg, #07101b 0%, #081726 48%, #0b1f33 100%);
+  color: var(--text);
 }
 
-/* TOGGLE */
 body.dark .toggle-switch {
-  background: #444;
+  background: #223f5c;
+  border-color: #305275;
 }
 
 body.dark .toggle-switch .circle {
   left: 28px;
+  background: #e9f3ff;
 }
 
-/* HEADER */
-body.dark header {
-  background: linear-gradient(135deg, #0e0d0d, #1a237e);
-  color: #ffffff;
+body.dark .main-header {
+  background: rgba(10, 20, 34, 0.82);
+  border-bottom-color: #2a4462;
 }
 
-/* MENU ICON */
 body.dark .menu-icon {
-  color: #ffffff;
+  color: #f3f8ff;
+  background: #10233a;
+  border-color: #2c4868;
 }
 
-/* PROFILE BUTTON */
 body.dark .profile-btn {
-  background-color: #000000;
-  color: #ffffff;
+  background-color: #10233a;
+  color: #f3f8ff;
+  border-color: #2c4868;
 }
 
-body.dark .profile-btn:hover {
-  background-color: #1e88e5;
-}
-body.dark .home-btn {
-  background-color: #000000;
-  color: #ffffff;
-
-}
-/* HEADER BUTTONS */
-body.dark .header-controls button {
-  background-color: #000000;
-  color: #ffffff;
-}
-
-body.dark .header-controls button:hover {
-  background-color: #1e88e5;
-}
-
-/* SIDEBAR */
 body.dark .sidebar {
-  background: #0d47a1;
-  color: #ffffff;
+  background: linear-gradient(180deg, #12587a, #0c3f5c);
+  color: #f4f9ff;
 }
 
-body.dark .sidebar a {
-  color: #e0e0e0;
+body.dark .dropdown {
+  background: #10233a;
+  border-color: #2c4868;
 }
 
-body.dark .sidebar a:hover {
-  color: #ffffff;
-}
-
-/* SECTIONS & CARDS */
 body.dark section {
-  background: #1e1e1e;
-  color: #e5e5e5;
-  border: 1px solid #ffffff;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
 }
 
 body.dark .card {
-  background: #2a2a2a;
-  border-color: #ffffff;
-  color: #e5e5e5;
-}
-
-/* CHATBOT */
-body.dark .chat-box {
-  background: #1e1e1e;
-  color: #e5e5e5;
-}
-
-body.dark .chat-btn {
-  background-color: rgb(58, 54, 54);
-  color: #ffffff;
+  background: var(--surface-soft);
+  border-color: var(--line);
+  color: var(--text);
 }
 
 body.dark .chat-log {
-  background: #2a2a2a;
-  border-color: #ffffff;
-  color: #e5e5e5;
+  background: #0f2237;
+  color: #e3efff;
 }
 
 body.dark .input-row input {
-  background: #333;
-  color: #ffffff;
-  border: 1px solid #ffffff;
+  background: #10233a;
+  color: #fff;
+  border-color: #2c4868;
 }
 
-/* POPUP */
 body.dark .popup {
-  background: #1e1e1e;
-  color: #e5e5e5;
+  background: #10233a;
+  color: #e8f0ff;
+  border-color: #2c4868;
 }
 
 body.dark .popup input {
-  background: #333;
-  color: #ffffff;
-  border: 1px solid #555;
+  background: #0f2034;
+  color: #fff;
+  border-color: #2c4868;
 }
 
-/* FOOTER */
-body.dark footer {
-  background: #1e1e1e;
-  color: #e5e5e5;
-  border-top: 1px solid #333;
+body.dark .inner-footer {
+  background: rgba(16, 35, 58, 0.78);
+  border-color: #2c4868;
+  color: #afc2df;
 }
