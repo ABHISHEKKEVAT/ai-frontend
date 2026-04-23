@@ -1,4 +1,4 @@
-import { API, API_BASE } from "./api.js";
+﻿import { API, API_BASE } from "./api.js";
 
 export async function loadProfile() {
   const token = localStorage.getItem("token");
@@ -49,7 +49,7 @@ export async function loadProfile() {
     if (overviewEmail) overviewEmail.textContent = user.email || "";
     if (overviewRole) overviewRole.textContent = user.role || "";
     if (verifyStatus) {
-      verifyStatus.textContent = user.isVerified ? "Verified ✅" : "Not Verified ❌";
+      verifyStatus.textContent = user.isVerified ? "Verified" : "Not Verified";
     }
     if (pfName) pfName.value = user.name || "";
 
@@ -125,3 +125,4 @@ export function initProfileForm() {
     }
   });
 }
+

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -22,7 +22,7 @@
   <div class="main-header">
 
     <!-- SIDEBAR -->
-    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    <div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <div class="sidebar" id="sidebar">
@@ -49,7 +49,7 @@
         <!-- PROFILE DROPDOWN -->
         <div class="profile">
           <button type="button" class="profile-btn" id="profileBtn">
-            👤 Profile
+            Profile
           </button>
 
           <div class="dropdown" id="dropdown">
@@ -147,7 +147,7 @@
 
   <footer>
     <div class="inner-footer">
-      <div>© 2026 — AI-Powered Employee Experience</div>
+      <div>&copy; 2026 - AI-Powered Employee Experience</div>
       <div id="clock"></div>
     </div>
   </footer>
@@ -176,7 +176,11 @@
   </div>
 
   <script>
-    const API = "https://ai-backend-1-7kxh.onrender.com/api";
+    const isLocalhost =
+      location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const API = isLocalhost
+      ? "http://127.0.0.1:5000/api"
+      : "https://ai-backend-1-7kxh.onrender.com/api";
 
     /* SIDEBAR */
     function toggleSidebar() {
@@ -278,7 +282,7 @@
         const users = await res.json();
 
         userList.innerHTML = users.map(u => `
-          <p>${u.name} — ${u.email} — ${u.role}</p>
+          <p>${u.name} - ${u.email} - ${u.role}</p>
         `).join("");
       } catch (error) {
         userList.innerHTML = "<p>Failed to load users.</p>";
@@ -321,3 +325,5 @@
   </script>
 </body>
 </html>
+
+
