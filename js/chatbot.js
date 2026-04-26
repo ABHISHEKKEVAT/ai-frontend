@@ -114,7 +114,7 @@ const FALLBACK_INTENTS = [
   {
     keywords: ["reset password", "forgot password", "password", "change password", "login issue", "cannot login"],
     reply:
-      "If you cannot log in:\n1) Click Forgot Password\n2) Use reset link sent to email\n3) Try logging in again with new password"
+      "If you cannot log in:\n1) Open Request Password Reset\n2) Admin verifies your account and resets password\n3) Log in again using the new password from admin"
   },
   {
     keywords: ["document", "offer letter", "experience letter", "salary certificate", "id card"],

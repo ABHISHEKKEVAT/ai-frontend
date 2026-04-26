@@ -86,13 +86,13 @@
 </head>
 <body class="auth-page">
   <div class="auth-card">
-    <h1>Forgot Password</h1>
-    <p>Enter your account email. We will send you a reset link.</p>
+    <h1>Request Password Reset</h1>
+    <p>Enter your account email. Your request will be sent to the server admin for a manual reset.</p>
 
     <form id="forgotForm">
       <label for="email">Email</label>
       <input id="email" type="email" placeholder="you@company.com" required />
-      <button type="submit" class="btn-primary" style="width:100%;">Send Reset Link</button>
+      <button type="submit" class="btn-primary" style="width:100%;">Send Reset Request</button>
     </form>
 
     <div class="status-msg" id="statusMsg"></div>
@@ -129,10 +129,10 @@
 
         const data = await res.json().catch(() => ({}));
         if (!res.ok) {
-          showStatus(data.msg || "Could not send reset link.");
+          showStatus(data.msg || "Could not submit reset request.");
           return;
         }
-        showStatus(data.msg || "Reset link sent if email exists.");
+        showStatus(data.msg || "Reset request submitted. Admin will reset your password.");
       } catch (error) {
         showStatus("Network error. Please try again.");
       }
