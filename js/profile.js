@@ -28,6 +28,11 @@ function normalizeText(value) {
   return String(value || "").trim();
 }
 
+function clearAuthSession() {
+  localStorage.removeItem("token");
+  localStorage.removeItem("user");
+}
+
 function normalizeHttpUrl(value) {
   const raw = normalizeText(value);
   if (!raw) return "";
@@ -203,6 +208,12 @@ export async function loadProfile() {
       headers: { Authorization: `Bearer ${token}` }
     });
 
+    if (res.status === 401) {
+      clearAuthSession();
+      resetProfileUI();
+      return;
+    }
+
     if (!res.ok) {
       throw new Error("Failed to load profile");
     }
@@ -336,6 +347,14 @@ export function initProfileForm() {
       });
 
       const data = await res.json().catch(() => ({}));
+      if (res.status === 401) {
+        clearAuthSession();
+        closeEditProfilePanel();
+        alert("Session expired. Please login again.");
+        window.location.href = "profile.html";
+        return;
+      }
+
       if (!res.ok) {
         throw new Error(data.msg || "Profile update failed");
       }
