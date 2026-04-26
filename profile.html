@@ -1,9 +1,15 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>My Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
 
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/header.css" />
@@ -21,14 +27,17 @@
 
     <div class="sidebar" id="sidebar">
       <h2>Menu</h2>
-      <a href="index.html#overview">Overview</a>
-      <a href="index.html#benefits">Benefits</a>
-      <a href="index.html#use-cases">Use Cases</a>
-      <a href="index.html#implementation">Implementation</a>
-      <a href="index.html#best-practices">Best Practices</a>
-      <a href="index.html#chatbot">Chatbot</a>
+      <a href="index.html#dashboard">Dashboard</a>
+      <a href="index.html#new-employee">New Employee</a>
+      <a href="index.html#current-employee">Current Employee</a>
+      <a href="index.html#quick-links">Quick Links</a>
+      <a href="index.html#learning">Learning</a>
+      <a href="index.html#support">Support</a>
+      <a href="about-company.html">About Company</a>
+      <a href="index.html#chatbot">AI Assistant</a>
       <a href="profile.html">Profile</a>
       <a href="index.html#admin-section">Admin</a>
+      <a href="#" id="sidebarLogoutLink">Logout</a>
     </div>
 
     <header>
@@ -39,6 +48,9 @@
           <div class="circle"></div>
         </div>
 
+        <button type="button" id="loginBtn" class="btn-secondary">Login</button>
+        <button type="button" id="signupBtn" class="btn-secondary">Sign Up</button>
+
         <div class="profile">
           <button type="button" class="profile-btn" id="profileBtn">
             <span class="profile-icon">My</span> Profile
@@ -46,8 +58,6 @@
 
           <div class="dropdown" id="dropdown">
             <a href="profile.html">My Account</a>
-            <a href="#" id="dropdownLoginLink">Login</a>
-            <a href="#" id="dropdownSignupLink">Sign Up</a>
             <a href="#">Settings</a>
             <a href="#" id="logoutLink">Logout</a>
           </div>
@@ -56,65 +66,159 @@
     </header>
   </div>
 
-  <section class="profile-modern">
+  <main class="profile-modern">
     <div class="profile-container">
-      <div class="profile-top-card">
-        <div class="profile-avatar-block">
-          <div class="avatar-ring">
-            <img id="profilePreview" src="https://via.placeholder.com/160" alt="Profile Preview" />
+      <section class="profile-hero-card">
+        <div class="profile-hero-main">
+          <div class="profile-avatar-block">
+            <div class="avatar-ring">
+              <img id="profilePreview" src="https://via.placeholder.com/160" alt="Profile Preview" />
+            </div>
+          </div>
+
+          <div class="profile-intro">
+            <p class="profile-tag">Employee Profile</p>
+            <h1 id="overviewName">Guest User</h1>
+            <p class="profile-role">
+              Role:
+              <span id="overviewRole">Guest</span>
+            </p>
+            <p class="profile-email" id="overviewEmail">Sign in to load account email.</p>
+            <div class="status-badge" id="verifyStatus">Not logged in</div>
+
+            <div class="hero-actions">
+              <button type="button" class="btn-primary" id="openEditProfileBtn">Edit Profile</button>
+              <a href="index.html#chatbot" class="btn-secondary">Ask AI Assistant</a>
+              <a href="about-company.html" class="btn-secondary">About Company</a>
+            </div>
+          </div>
+
+          <div class="hero-metrics">
+            <div class="metric-card">
+              <p class="metric-label">Profile Completion</p>
+              <p class="metric-value" id="metricCompletion">0%</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-label">Department</p>
+              <p class="metric-value" id="metricDepartment">Not set</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-label">Employee ID</p>
+              <p class="metric-value" id="metricEmployeeId">Not set</p>
+            </div>
           </div>
         </div>
+      </section>
 
-        <div class="profile-intro">
-          <p class="profile-tag">MY ACCOUNT</p>
-          <h1 id="overviewName">Guest User</h1>
-          <p class="profile-role"><span id="overviewRole">Guest</span></p>
-          <p class="profile-email" id="overviewEmail"></p>
-          <div class="status-badge" id="verifyStatus">Not logged in</div>
-        </div>
-      </div>
-
-      <div class="profile-grid">
+      <section class="profile-grid">
         <div class="profile-info-card">
-          <h2>About Profile</h2>
+          <div class="section-head">
+            <h2>Account Overview</h2>
+            <span class="pill-label">Live Data</span>
+          </div>
           <div id="profileContent" class="profile-content-box">
             <p>Please log in to view your profile.</p>
           </div>
 
           <div class="info-points">
             <div class="info-item">
-              <span class="info-label">Design</span>
-              <span class="info-value">Clean UI</span>
+              <span class="info-label">Job Title</span>
+              <span class="info-value" id="infoJobTitle">Not set</span>
             </div>
             <div class="info-item">
-              <span class="info-label">Access</span>
-              <span class="info-value">Secure Account</span>
+              <span class="info-label">Phone</span>
+              <span class="info-value" id="infoPhone">Not set</span>
             </div>
             <div class="info-item">
-              <span class="info-label">Profile</span>
-              <span class="info-value">Editable</span>
+              <span class="info-label">Location</span>
+              <span class="info-value" id="infoLocation">Not set</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Manager</span>
+              <span class="info-value" id="infoManagerName">Not set</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Join Date</span>
+              <span class="info-value" id="infoJoinDate">Not set</span>
             </div>
           </div>
         </div>
 
-        <div class="profile-form-card">
-          <h2>Edit Profile</h2>
+        <div class="profile-form-stack">
+          <div class="profile-mini-card">
+            <h3>Session Actions</h3>
+            <p>Use Edit Profile to keep your account details and preferences updated.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
 
-          <form id="profileForm">
+  <div class="edit-profile-dropdown" id="editProfileDropdown">
+    <div class="edit-profile-panel" id="editProfilePanel">
+      <div class="section-head">
+        <h2>Edit Profile</h2>
+        <button type="button" class="btn-secondary" id="closeEditProfileBtn">Close</button>
+      </div>
+
+      <form id="profileForm">
+        <div class="form-grid">
+          <div class="form-field">
             <label for="pfName">Full Name</label>
             <input type="text" id="pfName" placeholder="Enter your full name" />
-
+          </div>
+          <div class="form-field">
+            <label for="pfPhone">Phone</label>
+            <input type="text" id="pfPhone" placeholder="+1 555 123 4567" />
+          </div>
+          <div class="form-field">
+            <label for="pfJobTitle">Job Title</label>
+            <input type="text" id="pfJobTitle" placeholder="Software Engineer" />
+          </div>
+          <div class="form-field">
+            <label for="pfDepartment">Department</label>
+            <input type="text" id="pfDepartment" placeholder="Engineering" />
+          </div>
+          <div class="form-field">
+            <label for="pfEmployeeId">Employee ID</label>
+            <input type="text" id="pfEmployeeId" placeholder="EMP-1024" />
+          </div>
+          <div class="form-field">
+            <label for="pfManagerName">Manager Name</label>
+            <input type="text" id="pfManagerName" placeholder="Manager full name" />
+          </div>
+          <div class="form-field">
+            <label for="pfLocation">Location</label>
+            <input type="text" id="pfLocation" placeholder="Budapest, Hungary" />
+          </div>
+          <div class="form-field">
+            <label for="pfJoinDate">Join Date</label>
+            <input type="date" id="pfJoinDate" />
+          </div>
+          <div class="form-field form-field-full">
+            <label for="pfLinkedinUrl">LinkedIn URL</label>
+            <input type="url" id="pfLinkedinUrl" placeholder="https://linkedin.com/in/your-profile" />
+          </div>
+          <div class="form-field form-field-full">
+            <label for="pfSkills">Skills</label>
+            <input type="text" id="pfSkills" placeholder="React, Node.js, Leadership, Communication" />
+          </div>
+          <div class="form-field form-field-full">
+            <label for="pfBio">Bio</label>
+            <textarea id="pfBio" rows="4" placeholder="Write a short professional summary..."></textarea>
+          </div>
+          <div class="form-field form-field-full">
             <label for="pfAvatar">Profile Picture</label>
             <input type="file" id="pfAvatar" accept="image/*" />
-
-            <button type="submit" class="update-btn">Save Changes</button>
-          </form>
-
-          <button type="button" class="logout-btn" id="logoutBtn">Logout</button>
+          </div>
         </div>
-      </div>
+
+        <p class="form-help-text">Tip: Keep your profile updated so your team can collaborate faster.</p>
+
+        <button type="submit" class="update-btn">Save Changes</button>
+      </form>
     </div>
-  </section>
+  </div>
 
   <div class="popup-bg" id="popupBg">
     <div class="popup popup-card" id="popupCard">

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About Company | AI Employee Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+    rel="stylesheet"
+  />
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/dark.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
+
+  <style>
+    .about-page {
+      background:
+        radial-gradient(circle at 8% 12%, rgba(15, 139, 141, 0.15) 0%, transparent 28%),
+        radial-gradient(circle at 88% 16%, rgba(255, 122, 89, 0.16) 0%, transparent 30%),
+        linear-gradient(180deg, #f8fcff 0%, #eff6ff 58%, #edf5fb 100%);
+      min-height: 100vh;
+    }
+
+    .about-shell {
+      max-width: 1220px;
+      margin: 0 auto;
+      padding: 18px 24px 28px;
+    }
+
+    .about-nav {
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 16px 28px rgba(16, 36, 62, 0.1);
+    }
+
+    .brand-block {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 220px;
+    }
+
+    .brand-kicker {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--primary-strong);
+    }
+
+    .brand-title {
+      font-weight: 800;
+      font-size: 1.04rem;
+      color: var(--text);
+    }
+
+    .quick-nav {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .quick-nav a {
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #335476;
+      padding: 7px 10px;
+      border: 1px solid #d6e6fb;
+      border-radius: 999px;
+      background: #f9fcff;
+      transition: transform 0.2s ease, color 0.2s ease, background 0.2s ease;
+    }
+
+    .quick-nav a:hover {
+      transform: translateY(-1px);
+      color: #0a6f71;
+      background: #ffffff;
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .about-hero {
+      margin-top: 18px;
+      padding: 48px 34px 30px;
+      border-radius: 24px;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: linear-gradient(136deg, #0d7e80 0%, #1b7c98 45%, #2e5f9d 100%);
+      color: #f4fcff;
+      box-shadow: 0 26px 46px rgba(16, 36, 62, 0.18);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-hero::before,
+    .about-hero::after {
+      content: "";
+      position: absolute;
+      border-radius: 999px;
+      pointer-events: none;
+    }
+
+    .about-hero::before {
+      width: 300px;
+      height: 300px;
+      top: -110px;
+      right: -100px;
+      background: rgba(255, 255, 255, 0.18);
+      filter: blur(1px);
+    }
+
+    .about-hero::after {
+      width: 250px;
+      height: 250px;
+      left: -90px;
+      bottom: -120px;
+      background: rgba(255, 122, 89, 0.22);
+      filter: blur(2px);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 980px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.76rem;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      font-weight: 800;
+      padding: 6px 11px;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      background: rgba(255, 255, 255, 0.1);
+      margin-bottom: 12px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      line-height: 1.08;
+      margin-bottom: 12px;
+    }
+
+    .hero-content p {
+      max-width: 780px;
+      margin: 0 auto;
+      font-size: clamp(1rem, 2vw, 1.17rem);
+      line-height: 1.75;
+      opacity: 0.95;
+    }
+
+    .hero-metrics {
+      margin-top: 20px;
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .metric {
+      border: 1px solid rgba(255, 255, 255, 0.33);
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 12px;
+      text-align: center;
+    }
+
+    .metric h3 {
+      font-size: 1.34rem;
+      margin-bottom: 1px;
+      color: #ffffff;
+    }
+
+    .metric p {
+      font-size: 0.84rem;
+      opacity: 0.93;
+    }
+
+    main {
+      margin-top: 20px;
+      padding: 0;
+      max-width: 100%;
+    }
+
+    .content-card {
+      background: rgba(255, 255, 255, 0.95);
+      border: 1px solid #d9e8fb;
+      border-radius: 22px;
+      box-shadow: 0 16px 32px rgba(16, 36, 62, 0.08);
+      padding: 26px;
+      margin-bottom: 16px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: clamp(1.35rem, 2.4vw, 1.9rem);
+    }
+
+    .section-pill {
+      font-size: 0.74rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: #0a6f71;
+      border: 1px solid rgba(15, 139, 141, 0.27);
+      background: rgba(15, 139, 141, 0.1);
+      border-radius: 999px;
+      padding: 5px 9px;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .overview-copy p + p {
+      margin-top: 10px;
+    }
+
+    .highlight-box {
+      border-radius: 16px;
+      border: 1px solid #d7e8fb;
+      background: linear-gradient(170deg, #f9fcff 0%, #f1f8ff 100%);
+      padding: 16px;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+    }
+
+    .highlight-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    .highlight-num {
+      flex-shrink: 0;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      color: #0a6f71;
+      background: rgba(15, 139, 141, 0.12);
+      border: 1px solid rgba(15, 139, 141, 0.25);
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .feature-card {
+      border: 1px solid #dceafb;
+      border-radius: 16px;
+      background: linear-gradient(170deg, #ffffff 0%, #f7fbff 100%);
+      padding: 16px;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 16px 26px rgba(16, 36, 62, 0.12);
+    }
+
+    .feature-index {
+      display: inline-block;
+      margin-bottom: 8px;
+      font-size: 0.77rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #0a6f71;
+    }
+
+    .feature-card h3 {
+      margin-bottom: 6px;
+      font-size: 1.03rem;
+    }
+
+    .feature-card p {
+      color: #4c6686;
+    }
+
+    .roadmap {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      padding: 0;
+      margin: 0;
+    }
+
+    .roadmap li {
+      border: 1px solid #dceafb;
+      border-radius: 14px;
+      background: #f8fbff;
+      padding: 13px 14px;
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      gap: 10px;
+      align-items: start;
+    }
+
+    .step-dot {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 0.84rem;
+      font-weight: 800;
+      color: #ffffff;
+      background: linear-gradient(130deg, #0f8b8d, #1f7db1);
+    }
+
+    .roadmap strong {
+      display: block;
+      color: #10243e;
+      margin-bottom: 2px;
+    }
+
+    .roadmap p {
+      color: #4e6888;
+      margin: 0;
+    }
+
+    .principles {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .principles li {
+      margin: 0;
+      padding: 12px;
+      border-radius: 12px;
+      border: 1px solid #dceafb;
+      background: #f8fbff;
+      color: #2e4a6b;
+    }
+
+    .principles strong {
+      color: #10243e;
+    }
+
+    .cta-banner {
+      margin-top: 18px;
+      border-radius: 20px;
+      border: 1px solid #d9e8fb;
+      background: linear-gradient(136deg, #ffffff 0%, #f6fbff 100%);
+      padding: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cta-copy h3 {
+      font-size: 1.36rem;
+      margin-bottom: 4px;
+    }
+
+    .cta-copy p {
+      color: #4c6686;
+    }
+
+    .footer-card {
+      margin-top: 18px;
+      border-radius: 14px;
+      border: 1px solid #d8e7fb;
+      background: rgba(255, 255, 255, 0.82);
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      color: #4d6786;
+    }
+
+    body.dark.about-page {
+      background:
+        radial-gradient(circle at 8% 12%, rgba(15, 139, 141, 0.2) 0%, transparent 28%),
+        radial-gradient(circle at 88% 16%, rgba(255, 122, 89, 0.14) 0%, transparent 30%),
+        linear-gradient(180deg, #0f1826 0%, #0d1522 58%, #0a111c 100%);
+    }
+
+    body.dark .about-nav,
+    body.dark .content-card,
+    body.dark .feature-card,
+    body.dark .highlight-box,
+    body.dark .roadmap li,
+    body.dark .principles li,
+    body.dark .cta-banner,
+    body.dark .footer-card,
+    body.dark .quick-nav a {
+      background: #182335;
+      border-color: #2f435d;
+      color: #d2e1f5;
+      box-shadow: 0 16px 30px rgba(0, 0, 0, 0.35);
+    }
+
+    body.dark .brand-title,
+    body.dark .section-head h2,
+    body.dark .feature-card h3,
+    body.dark .roadmap strong,
+    body.dark .principles strong,
+    body.dark .cta-copy h3 {
+      color: #f2f7ff;
+    }
+
+    body.dark .feature-card p,
+    body.dark .roadmap p,
+    body.dark .principles li,
+    body.dark .cta-copy p,
+    body.dark .overview-copy p,
+    body.dark .footer-card {
+      color: #b7cae3;
+    }
+
+    body.dark .quick-nav a:hover {
+      color: #8dd9dd;
+      background: #1b2a40;
+    }
+
+    @media (max-width: 980px) {
+      .about-nav {
+        position: static;
+      }
+
+      .overview-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 760px) {
+      .about-shell {
+        padding: 12px;
+      }
+
+      .about-nav {
+        border-radius: 14px;
+      }
+
+      .brand-block {
+        min-width: 0;
+      }
+
+      .about-hero {
+        padding: 34px 18px 22px;
+        border-radius: 18px;
+      }
+
+      .hero-metrics {
+        grid-template-columns: 1fr;
+      }
+
+      .content-card,
+      .cta-banner {
+        border-radius: 16px;
+        padding: 18px;
+      }
+
+      .feature-grid,
+      .principles {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body class="about-page">
+  <div class="about-shell">
+    <div class="about-nav">
+      <div class="brand-block">
+        <span class="brand-kicker">AI Employee Experience</span>
+        <span class="brand-title">About Company</span>
+      </div>
+
+      <nav class="quick-nav" aria-label="About sections">
+        <a href="#overview">Overview</a>
+        <a href="#benefits">Benefits</a>
+        <a href="#use-cases">Use Cases</a>
+        <a href="#implementation">Implementation</a>
+        <a href="#best-practices">Best Practices</a>
+      </nav>
+
+      <div class="nav-actions">
+        <button type="button" class="btn-secondary" id="aboutThemeToggle">Toggle Theme</button>
+        <a href="index.html" class="btn-secondary">Back to Home</a>
+        <a href="profile.html" class="btn-secondary">Profile</a>
+        <a href="index.html#chatbot" class="btn-primary">Ask AI Assistant</a>
+      </div>
+    </div>
+
+    <section class="about-hero">
+      <div class="hero-content">
+        <span class="hero-tag">Company Direction</span>
+        <h1>Designing Employee Experience with AI at the Core</h1>
+        <p>
+          We combine human-first workflows with AI-powered support so employees
+          can onboard faster, find accurate answers quickly, and stay focused on
+          high-impact work.
+        </p>
+        <div class="hero-metrics">
+          <div class="metric">
+            <h3>30%</h3>
+            <p>faster onboarding ramp</p>
+          </div>
+          <div class="metric">
+            <h3>24/7</h3>
+            <p>self-serve knowledge access</p>
+          </div>
+          <div class="metric">
+            <h3>1 Hub</h3>
+            <p>for HR, IT, and policy guidance</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <section class="content-card" id="overview">
+        <div class="section-head">
+          <h2>Overview</h2>
+          <span class="section-pill">Vision</span>
+        </div>
+        <div class="overview-grid">
+          <div class="overview-copy">
+            <p>
+              Modern organizations generate large volumes of internal knowledge
+              across HR, IT, operations, and project teams. The challenge is not
+              information availability, it is discoverability and trust.
+            </p>
+            <p>
+              Our approach brings structured knowledge, AI assistance, and
+              employee workflows into one experience. This reduces repetitive
+              support dependency while improving consistency and speed.
+            </p>
+          </div>
+          <div class="highlight-box">
+            <div class="highlight-item">
+              <span class="highlight-num">01</span>
+              <p>Unify fragmented documents into one searchable source.</p>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-num">02</span>
+              <p>Deliver role-aware guidance for new and current employees.</p>
+            </div>
+            <div class="highlight-item">
+              <span class="highlight-num">03</span>
+              <p>Keep humans in control for complex or sensitive cases.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="content-card" id="benefits">
+        <div class="section-head">
+          <h2>Key Benefits</h2>
+          <span class="section-pill">Value</span>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-index">01</span>
+            <h3>Faster onboarding</h3>
+            <p>New hires get immediate, guided answers and become productive earlier.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-index">02</span>
+            <h3>Consistent information</h3>
+            <p>Teams rely on one trusted knowledge layer instead of mixed documents.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-index">03</span>
+            <h3>Lower support load</h3>
+            <p>HR and IT can focus on complex tasks instead of repeating routine replies.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-index">04</span>
+            <h3>Personalized guidance</h3>
+            <p>Employees see context-aware recommendations based on role and intent.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-card" id="use-cases">
+        <div class="section-head">
+          <h2>Use Cases</h2>
+          <span class="section-pill">Applications</span>
+        </div>
+        <div class="feature-grid">
+          <article class="feature-card">
+            <span class="feature-index">UC-1</span>
+            <h3>Onboarding Copilot</h3>
+            <p>Guides setup, training completion, and first-week priorities.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-index">UC-2</span>
+            <h3>HR FAQ Assistant</h3>
+            <p>Handles leave, payroll, policy, and documentation questions quickly.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-index">UC-3</span>
+            <h3>IT Helpdesk Guide</h3>
+            <p>Supports access requests, troubleshooting, and ticket readiness.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-index">UC-4</span>
+            <h3>Project Knowledge Layer</h3>
+            <p>Preserves decisions and lessons learned for future teams.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="content-card" id="implementation">
+        <div class="section-head">
+          <h2>How to Get Started</h2>
+          <span class="section-pill">Roadmap</span>
+        </div>
+        <ol class="roadmap">
+          <li>
+            <span class="step-dot">1</span>
+            <div>
+              <strong>Consolidate knowledge</strong>
+              <p>Centralize HR, IT, and operations documents into one source of truth.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-dot">2</span>
+            <div>
+              <strong>Define priority workflows</strong>
+              <p>Start with onboarding, leave support, payroll help, and IT access questions.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-dot">3</span>
+            <div>
+              <strong>Enable secure role access</strong>
+              <p>Apply permission-aware retrieval and visibility controls for sensitive data.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-dot">4</span>
+            <div>
+              <strong>Pilot and iterate</strong>
+              <p>Run with a focused group, collect feedback weekly, and improve answer quality.</p>
+            </div>
+          </li>
+          <li>
+            <span class="step-dot">5</span>
+            <div>
+              <strong>Measure business impact</strong>
+              <p>Track onboarding speed, ticket volume reduction, and employee satisfaction.</p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <section class="content-card" id="best-practices">
+        <div class="section-head">
+          <h2>Best Practices</h2>
+          <span class="section-pill">Governance</span>
+        </div>
+        <ul class="principles">
+          <li><strong>Security first:</strong> protect sensitive employee data with clear access controls.</li>
+          <li><strong>Content ownership:</strong> assign domain owners for regular review and updates.</li>
+          <li><strong>Transparent AI:</strong> indicate when responses are generated or confidence is limited.</li>
+          <li><strong>Human escalation:</strong> route exceptions and policy-sensitive decisions to people.</li>
+        </ul>
+      </section>
+
+      <section class="cta-banner">
+        <div class="cta-copy">
+          <h3>Ready to Explore the Employee Hub?</h3>
+          <p>Go back to the main page for onboarding tools, quick links, and the AI assistant.</p>
+        </div>
+        <div class="nav-actions">
+          <a href="index.html" class="btn-secondary">Open Home</a>
+          <a href="index.html#chatbot" class="btn-primary">Open AI Assistant</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer-card">
+      <div>&copy; 2026 - AI-Powered Employee Experience</div>
+      <div><a href="index.html">Return to Employee Hub</a></div>
+    </footer>
+  </div>
+  <script>
+    function applySavedTheme() {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
+    }
+
+    function toggleTheme() {
+      document.body.classList.toggle("dark");
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+    }
+
+    applySavedTheme();
+    const aboutThemeToggle = document.getElementById("aboutThemeToggle");
+    if (aboutThemeToggle) {
+      aboutThemeToggle.addEventListener("click", toggleTheme);
+    }
+  </script>
+</body>
+</html>

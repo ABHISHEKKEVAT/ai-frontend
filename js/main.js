@@ -91,20 +91,49 @@ function initPopupOutsideClose() {
   });
 }
 
+function applyAuthState() {
+  const token = localStorage.getItem("token");
+  const isLoggedIn = Boolean(token);
+  const loginBtn = document.getElementById("loginBtn");
+  const signupBtn = document.getElementById("signupBtn");
+  const logoutLink = document.getElementById("logoutLink");
+  const sidebarLogoutLink = document.getElementById("sidebarLogoutLink");
+  const profileBtn = document.getElementById("profileBtn");
+
+  if (loginBtn) loginBtn.style.display = isLoggedIn ? "none" : "";
+  if (signupBtn) signupBtn.style.display = isLoggedIn ? "none" : "";
+  if (logoutLink) logoutLink.style.display = isLoggedIn ? "" : "none";
+  if (sidebarLogoutLink) sidebarLogoutLink.style.display = isLoggedIn ? "" : "none";
+
+  if (!profileBtn) return;
+  if (!isLoggedIn) {
+    profileBtn.innerHTML = '<span class="profile-icon">My</span> Profile';
+    return;
+  }
+
+  try {
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const firstName = String(user?.name || "Profile").trim().split(/\s+/)[0];
+    profileBtn.innerHTML = `<span class="profile-icon">Hi</span> ${firstName}`;
+  } catch {
+    profileBtn.innerHTML = '<span class="profile-icon">My</span> Profile';
+  }
+}
+
 function initEvents() {
   const menuBtn = document.getElementById("menuBtn");
   const sidebarOverlay = document.getElementById("sidebarOverlay");
   const darkToggle = document.getElementById("darkToggle");
   const loginBtn = document.getElementById("loginBtn");
   const signupBtn = document.getElementById("signupBtn");
-  const dropdownLoginLink = document.getElementById("dropdownLoginLink");
-  const dropdownSignupLink = document.getElementById("dropdownSignupLink");
   const closePopupBtn = document.getElementById("closePopupBtn");
   const loginSubmit = document.getElementById("loginSubmitBtn");
   const signupSubmit = document.getElementById("signupSubmitBtn");
   const logoutBtn = document.getElementById("logoutBtn");
   const logoutLink = document.getElementById("logoutLink");
+  const sidebarLogoutLink = document.getElementById("sidebarLogoutLink");
   const sendBtn = document.getElementById("sendBtn");
+  const sidebar = document.getElementById("sidebar");
 
   if (menuBtn) menuBtn.addEventListener("click", toggleSidebar);
   if (sidebarOverlay) sidebarOverlay.addEventListener("click", toggleSidebar);
@@ -118,20 +147,6 @@ function initEvents() {
     signupBtn.addEventListener("click", () => openPopup("signup"));
   }
 
-  if (dropdownLoginLink) {
-    dropdownLoginLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      openPopup("login");
-    });
-  }
-
-  if (dropdownSignupLink) {
-    dropdownSignupLink.addEventListener("click", (e) => {
-      e.preventDefault();
-      openPopup("signup");
-    });
-  }
-
   if (closePopupBtn) {
     closePopupBtn.addEventListener("click", closePopup);
   }
@@ -141,6 +156,7 @@ function initEvents() {
       const success = await login();
       if (success) {
         closePopup();
+        applyAuthState();
         await loadProfile();
         await loadAdmin();
       }
@@ -159,11 +175,31 @@ function initEvents() {
   if (logoutLink) {
     logoutLink.addEventListener("click", (e) => {
       e.preventDefault();
+      applyAuthState();
+      logout();
+    });
+  }
+
+  if (sidebarLogoutLink) {
+    sidebarLogoutLink.addEventListener("click", (e) => {
+      e.preventDefault();
+      applyAuthState();
       logout();
     });
   }
 
   if (sendBtn) sendBtn.addEventListener("click", sendMessage);
+
+  if (sidebar) {
+    const sidebarLinks = sidebar.querySelectorAll("a");
+    sidebarLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        if (sidebar.classList.contains("open")) {
+          toggleSidebar();
+        }
+      });
+    });
+  }
 }
 
 function initClock() {
@@ -173,6 +209,7 @@ function initClock() {
 
 window.addEventListener("DOMContentLoaded", async () => {
   applySavedTheme();
+  applyAuthState();
   initEvents();
   initDropdown();
   initKeyboardAccessibility();

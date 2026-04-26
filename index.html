@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -21,32 +21,133 @@
   <link rel="stylesheet" href="css/responsive.css" />
   <link rel="stylesheet" href="css/chatbot.css" />
   <link rel="stylesheet" href="css/popup.css" />
+
+  <style>
+    .section-title-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+      flex-wrap: wrap;
+    }
+
+    .pill {
+      display: inline-block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--primary-strong);
+      background: rgba(15, 139, 141, 0.12);
+      border: 1px solid rgba(15, 139, 141, 0.25);
+      border-radius: 999px;
+      padding: 6px 10px;
+    }
+
+    .hero-actions {
+      margin-top: 22px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .task-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .task-item {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px 12px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .task-item input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--primary);
+    }
+
+    .progress-track {
+      width: 100%;
+      background: #e4edf9;
+      border-radius: 999px;
+      height: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+      border: 1px solid var(--line);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(120deg, var(--primary), #26a3a5);
+      transition: width 0.25s ease;
+    }
+
+    .quick-link-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .quick-link-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 12px;
+    }
+
+    .quick-link-item strong {
+      color: var(--text);
+    }
+
+    .mini-note {
+      margin-top: 8px;
+      font-size: 0.92rem;
+      color: var(--muted);
+    }
+  </style>
 </head>
 
 <body>
   <div class="main-header">
-
     <!-- SIDEBAR -->
     <div class="menu-icon" onclick="toggleSidebar()">&#9776;</div>
     <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
     <div class="sidebar" id="sidebar">
       <h2>Menu</h2>
-      <a href="#overview">Overview</a>
-      <a href="#benefits">Benefits</a>
-      <a href="#use-cases">Use Cases</a>
-      <a href="#implementation">Implementation</a>
-      <a href="#best-practices">Best Practices</a>
-      <a href="#chatbot">Chatbot</a>
+      <a href="#dashboard">Dashboard</a>
+      <a href="#new-employee">New Employee</a>
+      <a href="#current-employee">Current Employee</a>
+      <a href="#quick-links">Quick Links</a>
+      <a href="#learning">Learning</a>
+      <a href="#support">Support</a>
+      <a href="about-company.html">About Company</a>
+      <a href="#chatbot">AI Assistant</a>
       <a href="profile.html">Profile</a>
       <a href="#admin-section">Admin</a>
+      <a href="#" id="sidebarLogoutLink">Logout</a>
     </div>
 
     <header>
       <div class="header-controls">
-      
-
-  <!-- DARK MODE -->
+        <!-- DARK MODE -->
         <div class="toggle-switch" onclick="toggleDarkMode()">
           <div class="circle"></div>
         </div>
@@ -60,16 +161,16 @@
           <div class="dropdown" id="dropdown">
             <a href="profile.html">My Account</a>
             <a href="#">Settings</a>
-            <a href="#" onclick="handleLogout()">Logout</a>
+            <a href="#" onclick="return handleLogout(event)">Logout</a>
           </div>
         </div>
 
-        <button class="btn-secondary" onclick="openPopup('login')">Login</button>
-        <button class="btn-secondary" onclick="openPopup('signup')">Sign Up</button>
+        <button id="loginBtn" class="btn-secondary" onclick="openPopup('login')">Login</button>
+        <button id="signupBtn" class="btn-secondary" onclick="openPopup('signup')">Sign Up</button>
       </div>
 
       <a href="#chatbot" class="chat-btn">
-        Try the AI Chatbot
+        Ask Employee Assistant
       </a>
     </header>
   </div>
@@ -77,68 +178,175 @@
   <!-- Banner Section -->
   <div class="hero-bg">
     <div class="inner-section">
-      <h1>AI for Employee Onboarding & Knowledge Sharing</h1>
-      <p>AI transforms onboarding and internal knowledge into a smooth, personalized experience.</p>
-      <p>ABHISHEK</p>
+      <h1 id="employeeGreeting">Employee Experience Hub</h1>
+      <p>One place for first-week onboarding, daily work tools, and instant answers.</p>
+      <p>Designed for new hires and current employees</p>
+      <div class="hero-actions">
+        <a href="#new-employee" class="btn-primary">Start Onboarding</a>
+        <a href="#current-employee" class="btn-secondary">Open Daily Tools</a>
+        <a href="about-company.html" class="btn-secondary">About Company</a>
+      </div>
     </div>
   </div>
 
   <main>
-    <section id="overview">
-      <h2>Overview</h2>
-      <p>Modern organizations generate huge amounts of information...</p>
-      <p>AI-powered assistants make information instantly searchable...</p>
-    </section>
-
-    <section id="benefits">
-      <h2>Key Benefits</h2>
+    <section id="dashboard">
+      <div class="section-title-row">
+        <h2>Today at a Glance</h2>
+        <span class="pill" id="todayDatePill">Today</span>
+      </div>
       <div class="grid">
-        <div class="card"><h3>Faster onboarding</h3><p>New hires get instant answers...</p></div>
-        <div class="card"><h3>Consistent information</h3><p>AI uses a single knowledge base...</p></div>
-        <div class="card"><h3>Reduced support load</h3><p>HR and IT save time...</p></div>
-        <div class="card"><h3>Personalized learning</h3><p>AI adapts to each employee...</p></div>
+        <div class="card">
+          <h3>Today</h3>
+          <p id="todayLine">Loading date...</p>
+        </div>
+        <div class="card">
+          <h3>Timesheet Reminder</h3>
+          <p id="timesheetLine">Update your timesheet before Friday.</p>
+        </div>
+        <div class="card">
+          <h3>Onboarding Progress</h3>
+          <p id="onboardingProgressLabel">0 / 0 tasks completed</p>
+          <div class="progress-track">
+            <div class="progress-fill" id="onboardingProgressFill"></div>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Need Help Fast?</h3>
+          <p>Use the AI assistant for leave, payroll, IT support, and policy questions.</p>
+          <p class="mini-note"><a href="#chatbot">Open assistant</a></p>
+        </div>
       </div>
     </section>
 
-    <section id="use-cases">
-      <h2>Use Cases</h2>
+    <section id="new-employee">
+      <div class="section-title-row">
+        <h2>New Employee Starter Pack</h2>
+        <span class="pill">First 30 Days</span>
+      </div>
       <div class="grid">
-        <div class="card"><h3>Onboarding Copilot</h3><p>Guides new hires...</p></div>
-        <div class="card"><h3>HR FAQ Bot</h3><p>Answers policy questions...</p></div>
-        <div class="card"><h3>IT Helpdesk</h3><p>Explains how to access systems...</p></div>
-        <div class="card"><h3>Project Knowledge</h3><p>Captures lessons learned...</p></div>
+        <div class="card">
+          <h3>Week 1 Focus</h3>
+          <ul>
+            <li>Complete profile, payroll, and tax details</li>
+            <li>Set up email, chat, VPN, and core tools</li>
+            <li>Review team goals with your manager</li>
+            <li>Finish required policy and compliance training</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Onboarding Checklist</h3>
+          <p>Progress is saved in this browser.</p>
+          <div class="task-list" id="onboardingChecklist"></div>
+        </div>
       </div>
     </section>
 
-    <section id="implementation">
-      <h2>How to Get Started</h2>
-      <ul>
-        <li>Centralize content</li>
-        <li>Define use cases</li>
-        <li>Choose AI tools</li>
-        <li>Pilot with a small group</li>
-        <li>Measure impact</li>
-      </ul>
+    <section id="current-employee">
+      <div class="section-title-row">
+        <h2>Current Employee Essentials</h2>
+        <span class="pill">Daily Workflow</span>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <h3>Daily Actions</h3>
+          <ul>
+            <li>Log attendance and update timesheet</li>
+            <li>Check announcements and deadlines</li>
+            <li>Review pending manager approvals</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Weekly Actions</h3>
+          <ul>
+            <li>Track goals and project milestones</li>
+            <li>Submit expense or reimbursement claims</li>
+            <li>Plan leave and handover if needed</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Performance & Growth</h3>
+          <p>Use one learning goal per quarter and discuss progress in 1:1 meetings.</p>
+          <p class="mini-note">Tip: Keep a running "wins log" for appraisal cycles.</p>
+        </div>
+      </div>
     </section>
 
-    <section id="best-practices">
-      <h2>Best Practices</h2>
-      <ul>
-        <li>Data security</li>
-        <li>Content quality</li>
-        <li>Transparency</li>
-        <li>Human in the loop</li>
-      </ul>
+    <section id="quick-links">
+      <h2>Quick Links</h2>
+      <div class="quick-link-list">
+        <div class="quick-link-item">
+          <div>
+            <strong>Leave & Attendance</strong>
+            <p>Apply leave, check balance, and correct attendance logs.</p>
+          </div>
+          <a href="#chatbot" class="btn-secondary">Ask How</a>
+        </div>
+        <div class="quick-link-item">
+          <div>
+            <strong>Payroll & Payslips</strong>
+            <p>View compensation details and report payroll issues.</p>
+          </div>
+          <a href="#chatbot" class="btn-secondary">Get Help</a>
+        </div>
+        <div class="quick-link-item">
+          <div>
+            <strong>IT Support</strong>
+            <p>Reset password, request software access, and report device issues.</p>
+          </div>
+          <a href="#chatbot" class="btn-secondary">Open Support</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="learning">
+      <h2>Learning Paths</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>New Hire Path</h3>
+          <p>Company overview, product basics, role expectations, and tool training.</p>
+        </div>
+        <div class="card">
+          <h3>Role Mastery Path</h3>
+          <p>Deepen functional skills, documentation quality, and execution speed.</p>
+        </div>
+        <div class="card">
+          <h3>Leadership Path</h3>
+          <p>Coaching, communication, decision-making, and conflict resolution.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="support">
+      <h2>Support Directory</h2>
+      <div class="grid">
+        <div class="card">
+          <h3>HR Support</h3>
+          <p>Policy, leave, payroll and documentation questions.</p>
+          <p><a href="mailto:hr@company.com">hr@company.com</a></p>
+        </div>
+        <div class="card">
+          <h3>IT Helpdesk</h3>
+          <p>Access, password resets, device issues, and software installation.</p>
+          <p><a href="mailto:it-support@company.com">it-support@company.com</a></p>
+        </div>
+        <div class="card">
+          <h3>Manager Escalation</h3>
+          <p>Workload, blockers, and timeline alignment.</p>
+          <p>Reach your reporting manager first, then HRBP if unresolved.</p>
+        </div>
+      </div>
     </section>
 
     <!-- CHATBOT -->
     <section id="chatbot">
-      <h2>My Own AI Chatbot</h2>
+      <h2>Employee Assistant</h2>
+      <p>Ask practical questions about onboarding, leave, payroll, policies, and IT.</p>
       <div class="chat-box">
         <div class="chat-log" id="chatLog"></div>
         <div class="chat-suggestions" id="chatSuggestions"></div>
         <div class="input-row">
-          <input id="userInput" placeholder="Ask a question...">
+          <input id="userInput" placeholder="Ask a question..." />
           <button onclick="sendMessage()">Send</button>
         </div>
       </div>
@@ -164,19 +372,19 @@
       <h2 id="popupTitle"></h2>
 
       <div id="loginForm" style="display:none;">
-        <input id="liEmail" type="email" placeholder="Email">
-        <input id="liPassword" type="password" placeholder="Password">
+        <input id="liEmail" type="email" placeholder="Email" />
+        <input id="liPassword" type="password" placeholder="Password" />
         <button onclick="handleLogin()" style="width:100%;">Login</button>
       </div>
 
       <div id="signupForm" style="display:none;">
-        <input id="suName" type="text" placeholder="Full Name">
-        <input id="suEmail" type="email" placeholder="Email">
-        <input id="suPassword" type="password" placeholder="Password">
+        <input id="suName" type="text" placeholder="Full Name" />
+        <input id="suEmail" type="email" placeholder="Email" />
+        <input id="suPassword" type="password" placeholder="Password" />
         <button onclick="handleSignup()" style="width:100%;">Sign Up</button>
       </div>
 
-      <br>
+      <br />
       <button onclick="closePopup()" style="width:100%;">Close</button>
     </div>
   </div>
@@ -188,6 +396,16 @@
       ? "http://127.0.0.1:5000/api"
       : "https://ai-backend-1-7kxh.onrender.com/api";
 
+    const ONBOARDING_STORAGE_KEY = "onboardingChecklistV1";
+    const onboardingItems = [
+      { id: "profile", label: "Complete your profile and emergency contact" },
+      { id: "docs", label: "Upload payroll and tax documents" },
+      { id: "tools", label: "Set up email, chat, and essential apps" },
+      { id: "security", label: "Enable MFA and security settings" },
+      { id: "training", label: "Finish mandatory onboarding training" },
+      { id: "manager", label: "Schedule first 1:1 with your manager" }
+    ];
+
     /* SIDEBAR */
     function toggleSidebar() {
       document.getElementById("sidebar").classList.toggle("open");
@@ -197,6 +415,16 @@
     /* DARK MODE */
     function toggleDarkMode() {
       document.body.classList.toggle("dark");
+      localStorage.setItem("theme", document.body.classList.contains("dark") ? "dark" : "light");
+    }
+
+    function applySavedTheme() {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        document.body.classList.add("dark");
+      } else {
+        document.body.classList.remove("dark");
+      }
     }
 
     /* POPUP */
@@ -220,8 +448,7 @@
       try {
         const res = await fetch(`${API}/auth/signup`, {
           method: "POST",
-          headers: {
-             "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ name, email, password })
         });
 
@@ -253,6 +480,8 @@
           alert("Login successful");
           closePopup();
           loadAdminPanel();
+          renderPersonalizedWelcome();
+          updateAuthUI();
           if (window.refreshChatSuggestions) window.refreshChatSuggestions();
         } else {
           alert(data.msg || "Login failed");
@@ -264,12 +493,16 @@
     }
 
     /* LOGOUT */
-    function handleLogout() {
+    function handleLogout(e) {
+      if (e) e.preventDefault();
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       document.getElementById("admin-section").style.display = "none";
       alert("Logged out successfully");
+      renderPersonalizedWelcome();
+      updateAuthUI();
       if (window.refreshChatSuggestions) window.refreshChatSuggestions();
+      return false;
     }
 
     /* ADMIN PANEL */
@@ -289,12 +522,157 @@
 
         const users = await res.json();
 
-        userList.innerHTML = users.map(u => `
+        userList.innerHTML = users.map((u) => `
           <p>${u.name} - ${u.email} - ${u.role}</p>
         `).join("");
       } catch (error) {
         userList.innerHTML = "<p>Failed to load users.</p>";
         console.error(error);
+      }
+    }
+
+    function formatFriendlyDate(date) {
+      return date.toLocaleDateString(undefined, {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    }
+
+    function getNextFridayLabel() {
+      const now = new Date();
+      const day = now.getDay();
+      const diff = (5 - day + 7) % 7;
+      const nextFriday = new Date(now);
+      nextFriday.setDate(now.getDate() + diff);
+      return nextFriday.toLocaleDateString(undefined, {
+        month: "short",
+        day: "numeric"
+      });
+    }
+
+    function renderTodayWidgets() {
+      const today = new Date();
+      const todayLabel = formatFriendlyDate(today);
+      const nextFriday = getNextFridayLabel();
+
+      const todayLine = document.getElementById("todayLine");
+      const timesheetLine = document.getElementById("timesheetLine");
+      const todayDatePill = document.getElementById("todayDatePill");
+
+      if (todayLine) todayLine.textContent = todayLabel;
+      if (timesheetLine) timesheetLine.textContent = `Submit weekly timesheet by ${nextFriday}.`;
+      if (todayDatePill) todayDatePill.textContent = today.toLocaleDateString(undefined, { month: "short", day: "numeric" });
+    }
+
+    function getChecklistState() {
+      try {
+        return JSON.parse(localStorage.getItem(ONBOARDING_STORAGE_KEY) || "{}");
+      } catch {
+        return {};
+      }
+    }
+
+    function saveChecklistState(state) {
+      localStorage.setItem(ONBOARDING_STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function updateOnboardingProgress() {
+      const state = getChecklistState();
+      const total = onboardingItems.length;
+      const completed = onboardingItems.filter((item) => Boolean(state[item.id])).length;
+      const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+      const label = document.getElementById("onboardingProgressLabel");
+      const fill = document.getElementById("onboardingProgressFill");
+      if (label) label.textContent = `${completed} / ${total} tasks completed`;
+      if (fill) fill.style.width = `${percent}%`;
+    }
+
+    function renderOnboardingChecklist() {
+      const wrapper = document.getElementById("onboardingChecklist");
+      if (!wrapper) return;
+
+      const state = getChecklistState();
+      wrapper.innerHTML = onboardingItems
+        .map((item) => `
+          <label class="task-item">
+            <input type="checkbox" data-task-id="${item.id}" ${state[item.id] ? "checked" : ""} />
+            <span>${item.label}</span>
+          </label>
+        `)
+        .join("");
+
+      wrapper.addEventListener("change", (e) => {
+        const input = e.target;
+        if (!(input instanceof HTMLInputElement)) return;
+        const taskId = input.getAttribute("data-task-id");
+        if (!taskId) return;
+
+        const nextState = getChecklistState();
+        nextState[taskId] = input.checked;
+        saveChecklistState(nextState);
+        updateOnboardingProgress();
+      });
+
+      updateOnboardingProgress();
+    }
+
+    function renderPersonalizedWelcome() {
+      const heading = document.getElementById("employeeGreeting");
+      if (!heading) return;
+
+      try {
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+        const name = user?.name ? String(user.name).trim() : "";
+        heading.textContent = name ? `Welcome, ${name}` : "Employee Experience Hub";
+      } catch {
+        heading.textContent = "Employee Experience Hub";
+      }
+    }
+
+    function updateAuthUI() {
+      const loginBtn = document.getElementById("loginBtn");
+      const signupBtn = document.getElementById("signupBtn");
+      const sidebarLogoutLink = document.getElementById("sidebarLogoutLink");
+      const profileBtnLocal = document.getElementById("profileBtn");
+      const isLoggedIn = Boolean(localStorage.getItem("token"));
+
+      if (loginBtn) loginBtn.style.display = isLoggedIn ? "none" : "";
+      if (signupBtn) signupBtn.style.display = isLoggedIn ? "none" : "";
+      if (sidebarLogoutLink) sidebarLogoutLink.style.display = isLoggedIn ? "" : "none";
+
+      if (!profileBtnLocal) return;
+      if (!isLoggedIn) {
+        profileBtnLocal.textContent = "Profile";
+        return;
+      }
+
+      try {
+        const user = JSON.parse(localStorage.getItem("user") || "{}");
+        const firstName = String(user?.name || "Profile").trim().split(/\s+/)[0];
+        profileBtnLocal.textContent = `Hi, ${firstName}`;
+      } catch {
+        profileBtnLocal.textContent = "Profile";
+      }
+    }
+
+    function initSidebarInteractions() {
+      const sidebar = document.getElementById("sidebar");
+      const sidebarLogoutLink = document.getElementById("sidebarLogoutLink");
+      if (!sidebar) return;
+
+      sidebar.querySelectorAll("a").forEach((link) => {
+        link.addEventListener("click", () => {
+          if (sidebar.classList.contains("open")) toggleSidebar();
+        });
+      });
+
+      if (sidebarLogoutLink) {
+        sidebarLogoutLink.addEventListener("click", (e) => {
+          handleLogout(e);
+        });
       }
     }
 
@@ -307,25 +685,33 @@
 
     /* INITIAL LOAD */
     window.addEventListener("load", () => {
+      applySavedTheme();
       loadAdminPanel();
+      renderPersonalizedWelcome();
+      renderTodayWidgets();
+      renderOnboardingChecklist();
+      updateAuthUI();
+      initSidebarInteractions();
     });
 
     /* DROPDOWN */
     const profileBtn = document.getElementById("profileBtn");
     const dropdown = document.getElementById("dropdown");
 
-    profileBtn.addEventListener("click", function (e) {
-      e.stopPropagation();
-      dropdown.classList.toggle("show");
-    });
+    if (profileBtn && dropdown) {
+      profileBtn.addEventListener("click", function (e) {
+        e.stopPropagation();
+        dropdown.classList.toggle("show");
+      });
 
-    dropdown.addEventListener("click", function (e) {
-      e.stopPropagation();
-    });
+      dropdown.addEventListener("click", function (e) {
+        e.stopPropagation();
+      });
 
-    document.addEventListener("click", function () {
-      dropdown.classList.remove("show");
-    });
+      document.addEventListener("click", function () {
+        dropdown.classList.remove("show");
+      });
+    }
   </script>
   <script type="module">
     import { sendMessage, initChatSuggestions, refreshChatSuggestions } from "./js/chatbot.js";
@@ -335,5 +721,4 @@
   </script>
 </body>
 </html>
-
 
