@@ -188,3 +188,13 @@ body.dark .inner-footer {
   border-color: #2c4868;
   color: #afc2df;
 }
+
+body.dark .chat-fab {
+  background: linear-gradient(135deg, #1c6bb5, #0e88b0);
+  color: #f2f8ff;
+  box-shadow: 0 14px 30px rgba(5, 14, 26, 0.5);
+}
+
+body.dark .chat-fab::before {
+  border-color: rgba(112, 178, 255, 0.42);
+}

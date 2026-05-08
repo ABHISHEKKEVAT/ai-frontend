@@ -72,3 +72,72 @@
 .input-row button:hover {
   transform: translateY(-1px);
 }
+
+.chat-fab {
+  position: fixed;
+  right: 18px;
+  bottom: 20px;
+  width: 56px;
+  height: 56px;
+  border: none;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: #ffffff;
+  background: linear-gradient(135deg, #0e7288, #0b8a8f);
+  box-shadow: 0 12px 28px rgba(11, 94, 109, 0.36);
+  cursor: pointer;
+  z-index: 1200;
+  animation: chatFabFloat 3.2s ease-in-out infinite;
+  transition: bottom 0.25s ease, transform 0.2s ease;
+}
+
+.chat-fab::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 2px solid rgba(14, 114, 136, 0.38);
+  animation: chatFabPulse 2s ease-out infinite;
+}
+
+.chat-fab-icon {
+  width: 25px;
+  height: 25px;
+}
+
+.chat-fab:hover {
+  transform: translateY(-2px);
+}
+
+.chat-fab.chat-fab--lifted {
+  bottom: 86px;
+}
+
+@keyframes chatFabPulse {
+  0% {
+    transform: scale(0.9);
+    opacity: 0.8;
+  }
+
+  70% {
+    transform: scale(1.24);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1.24);
+    opacity: 0;
+  }
+}
+
+@keyframes chatFabFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-3px);
+  }
+}
