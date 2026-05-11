@@ -1,4 +1,5 @@
 import { API } from "./api.js";
+let isSignupSubmitting = false;
 
 function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(email || "").trim());
@@ -51,9 +52,12 @@ export async function login() {
 }
 
 export async function signup() {
+  if (isSignupSubmitting) return false;
+
   const nameInput = document.getElementById("suName");
   const emailInput = document.getElementById("suEmail");
   const passwordInput = document.getElementById("suPassword");
+  const submitBtn = document.getElementById("signupSubmitBtn");
 
   if (!nameInput || !emailInput || !passwordInput) {
     alert("Signup form not found");
@@ -74,6 +78,12 @@ export async function signup() {
   }
 
   try {
+    isSignupSubmitting = true;
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Signing Up...";
+    }
+
     const res = await fetch(`${API}/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -93,6 +103,12 @@ export async function signup() {
     console.error("Signup error:", error);
     alert("Signup error");
     return false;
+  } finally {
+    isSignupSubmitting = false;
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Sign Up";
+    }
   }
 }
 

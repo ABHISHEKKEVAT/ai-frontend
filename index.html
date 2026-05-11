@@ -452,7 +452,7 @@
     const isLocalhost =
       location.hostname === "localhost" || location.hostname === "127.0.0.1";
     const API = isLocalhost
-      ? "http://127.0.0.1:5000/api"
+      ? "http://127.0.0.1:10000/api"
       : "https://ai-backend-1-7kxh.onrender.com/api";
 
     const ONBOARDING_STORAGE_KEY = "onboardingChecklistV1";
@@ -517,11 +517,16 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(email || "").trim());
     }
 
+    let isSignupSubmitting = false;
+
     /* SIGNUP */
     async function handleSignup() {
+      if (isSignupSubmitting) return;
+
       const name = document.getElementById("suName").value.trim();
       const email = document.getElementById("suEmail").value.trim().toLowerCase();
       const password = document.getElementById("suPassword").value;
+      const signupSubmitBtn = document.querySelector("#signupForm button");
 
       if (!name || !email || !password) {
         alert("Please fill all signup fields");
@@ -533,6 +538,12 @@
       }
 
       try {
+        isSignupSubmitting = true;
+        if (signupSubmitBtn) {
+          signupSubmitBtn.disabled = true;
+          signupSubmitBtn.textContent = "Signing Up...";
+        }
+
         const res = await fetch(`${API}/auth/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -544,6 +555,12 @@
       } catch (error) {
         alert("Signup failed");
         console.error(error);
+      } finally {
+        isSignupSubmitting = false;
+        if (signupSubmitBtn) {
+          signupSubmitBtn.disabled = false;
+          signupSubmitBtn.textContent = "Sign Up";
+        }
       }
     }
 

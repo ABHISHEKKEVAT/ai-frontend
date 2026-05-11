@@ -1,4 +1,4 @@
-const LOCAL_BACKEND = "http://127.0.0.1:5000";
+const LOCAL_BACKEND = "http://127.0.0.1:10000";
 const RENDER_BACKEND = "https://ai-backend-1-7kxh.onrender.com";
 const isLocalhost =
   window.location.hostname === "localhost" ||
