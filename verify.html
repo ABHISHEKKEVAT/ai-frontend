@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Forgot Password | AI Employee Experience</title>
+  <title>Verify Email | AI Employee Experience</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
@@ -86,13 +86,17 @@
 </head>
 <body class="auth-page">
   <div class="auth-card">
-    <h1>Request Password Reset</h1>
-    <p>Enter your account email. Your request will be sent to the server admin for a manual reset.</p>
+    <h1>Verify Your Email</h1>
+    <p>Enter the 6-digit code from your email, or use the verification link in the email.</p>
 
-    <form id="forgotForm">
+    <form id="verifyForm">
       <label for="email">Email</label>
       <input id="email" type="email" placeholder="you@company.com" required />
-      <button type="submit" class="btn-primary" style="width:100%;">Send Reset Request</button>
+
+      <label for="code">Verification Code</label>
+      <input id="code" type="text" inputmode="numeric" maxlength="6" placeholder="123456" required />
+
+      <button type="submit" class="btn-primary" style="width:100%;">Verify Email</button>
     </form>
 
     <div class="status-msg" id="statusMsg"></div>
@@ -106,9 +110,17 @@
   <script type="module">
     import { API } from "./js/api.js";
 
-    const form = document.getElementById("forgotForm");
+    const form = document.getElementById("verifyForm");
     const emailInput = document.getElementById("email");
+    const codeInput = document.getElementById("code");
     const statusMsg = document.getElementById("statusMsg");
+    const searchParams = new URLSearchParams(window.location.search);
+    const token = String(searchParams.get("token") || "").trim();
+    const prefillEmail = String(searchParams.get("email") || "").trim();
+
+    if (prefillEmail) {
+      emailInput.value = prefillEmail.toLowerCase();
+    }
 
     function showStatus(message) {
       statusMsg.textContent = message;
@@ -119,32 +131,51 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(email || "").trim());
     }
 
+    function isValidCode(code) {
+      return /^\d{6}$/.test(String(code || "").trim());
+    }
+
+    async function verifyByToken() {
+      try {
+        const res = await fetch(`${API}/auth/verify/${encodeURIComponent(token)}`);
+        const text = await res.text();
+        showStatus(text || (res.ok ? "Email verified successfully." : "Invalid or expired verification link."));
+      } catch {
+        showStatus("Network error while verifying. Please try code verification.");
+      }
+    }
+
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const email = String(emailInput.value || "").trim().toLowerCase();
-      if (!email) return;
+      const code = String(codeInput.value || "").trim();
+
       if (!isValidEmail(email)) {
-        showStatus("Please enter a valid email address (must include @ and domain).");
+        showStatus("Please enter a valid email address.");
+        return;
+      }
+      if (!isValidCode(code)) {
+        showStatus("Please enter a valid 6-digit verification code.");
         return;
       }
 
       try {
-        const res = await fetch(`${API}/auth/forgot`, {
+        const res = await fetch(`${API}/auth/verify-code`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ email })
+          body: JSON.stringify({ email, code })
         });
 
         const data = await res.json().catch(() => ({}));
-        if (!res.ok) {
-          showStatus(data.msg || "Could not submit reset request.");
-          return;
-        }
-        showStatus(data.msg || "Reset request submitted. Admin will reset your password.");
-      } catch (error) {
-        showStatus("Network error. Please try again.");
+        showStatus(data.msg || (res.ok ? "Email verified successfully." : "Verification failed."));
+      } catch {
+        showStatus("Network error while verifying. Please try again.");
       }
     });
+
+    if (token) {
+      verifyByToken();
+    }
   </script>
 </body>
 </html>

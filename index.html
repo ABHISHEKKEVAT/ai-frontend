@@ -513,11 +513,24 @@
       return date.toLocaleString();
     }
 
+    function isValidEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(email || "").trim());
+    }
+
     /* SIGNUP */
     async function handleSignup() {
-      const name = document.getElementById("suName").value;
-      const email = document.getElementById("suEmail").value;
+      const name = document.getElementById("suName").value.trim();
+      const email = document.getElementById("suEmail").value.trim().toLowerCase();
       const password = document.getElementById("suPassword").value;
+
+      if (!name || !email || !password) {
+        alert("Please fill all signup fields");
+        return;
+      }
+      if (!isValidEmail(email)) {
+        alert("Please enter a valid email address (example: name@gmail.com).");
+        return;
+      }
 
       try {
         const res = await fetch(`${API}/auth/signup`, {
@@ -536,8 +549,17 @@
 
     /* LOGIN */
     async function handleLogin() {
-      const email = document.getElementById("liEmail").value;
+      const email = document.getElementById("liEmail").value.trim().toLowerCase();
       const password = document.getElementById("liPassword").value;
+
+      if (!email || !password) {
+        alert("Please enter email and password");
+        return;
+      }
+      if (!isValidEmail(email)) {
+        alert("Please enter a valid email address (must include @ and domain).");
+        return;
+      }
 
       try {
         const res = await fetch(`${API}/auth/login`, {

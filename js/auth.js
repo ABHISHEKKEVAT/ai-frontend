@@ -1,5 +1,9 @@
 import { API } from "./api.js";
 
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(email || "").trim());
+}
+
 export async function login() {
   const emailInput = document.getElementById("liEmail");
   const passwordInput = document.getElementById("liPassword");
@@ -9,11 +13,15 @@ export async function login() {
     return false;
   }
 
-  const email = emailInput.value.trim();
+  const email = emailInput.value.trim().toLowerCase();
   const password = passwordInput.value;
 
   if (!email || !password) {
     alert("Please enter email and password");
+    return false;
+  }
+  if (!isValidEmail(email)) {
+    alert("Please enter a valid email address (example: name@gmail.com).");
     return false;
   }
 
@@ -53,11 +61,15 @@ export async function signup() {
   }
 
   const name = nameInput.value.trim();
-  const email = emailInput.value.trim();
+  const email = emailInput.value.trim().toLowerCase();
   const password = passwordInput.value;
 
   if (!name || !email || !password) {
     alert("Please fill all signup fields");
+    return false;
+  }
+  if (!isValidEmail(email)) {
+    alert("Please enter a valid email address (example: name@yahoo.com).");
     return false;
   }
 
