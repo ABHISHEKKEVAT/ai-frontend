@@ -39,7 +39,6 @@ export async function login() {
       alert(data.msg || "Login failed");
       return false;
     }
-
     localStorage.setItem("token", data.token);
     localStorage.setItem("user", JSON.stringify(data.user));
     alert("Login successful");
@@ -57,6 +56,7 @@ export async function signup() {
   const nameInput = document.getElementById("suName");
   const emailInput = document.getElementById("suEmail");
   const passwordInput = document.getElementById("suPassword");
+  const roleInput = document.getElementById("suRole");
   const submitBtn = document.getElementById("signupSubmitBtn");
 
   if (!nameInput || !emailInput || !passwordInput) {
@@ -67,6 +67,7 @@ export async function signup() {
   const name = nameInput.value.trim();
   const email = emailInput.value.trim().toLowerCase();
   const password = passwordInput.value;
+  const role = roleInput?.value === "admin" ? "admin" : "user";
 
   if (!name || !email || !password) {
     alert("Please fill all signup fields");
@@ -87,7 +88,7 @@ export async function signup() {
     const res = await fetch(`${API}/auth/signup`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, email, password })
+      body: JSON.stringify({ name, email, password, role })
     });
 
     const data = await res.json();

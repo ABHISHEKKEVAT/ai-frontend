@@ -440,6 +440,10 @@
         <input id="suName" type="text" placeholder="Full Name" />
         <input id="suEmail" type="email" placeholder="Email" />
         <input id="suPassword" type="password" placeholder="Password" />
+        <select id="suRole" aria-label="Signup role">
+          <option value="user" selected>User</option>
+          <option value="admin">Admin</option>
+        </select>
         <button onclick="handleSignup()" style="width:100%;">Sign Up</button>
       </div>
 
@@ -526,6 +530,8 @@
       const name = document.getElementById("suName").value.trim();
       const email = document.getElementById("suEmail").value.trim().toLowerCase();
       const password = document.getElementById("suPassword").value;
+      const roleValue = document.getElementById("suRole")?.value || "user";
+      const role = roleValue === "admin" ? "admin" : "user";
       const signupSubmitBtn = document.querySelector("#signupForm button");
 
       if (!name || !email || !password) {
@@ -547,7 +553,7 @@
         const res = await fetch(`${API}/auth/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password })
+          body: JSON.stringify({ name, email, password, role })
         });
 
         const data = await res.json();
