@@ -17,7 +17,7 @@ const ROLE_SUGGESTIONS = {
     "How do I submit reimbursement?"
   ],
   guest: [
-    "How do I sign up and verify my email?",
+    "How do I sign up?",
     "How do I contact HR support?"
   ]
 };
@@ -317,7 +317,7 @@ export function getAIResponse(text, role = getCurrentUserRole()) {
       ? "\nTry: How do I manage users and roles?"
       : role === "user"
         ? "\nTry: How do I raise an IT support ticket?"
-        : "\nTry: How do I sign up and verify my email?";
+        : "\nTry: How do I sign up?";
 
   return `I can help with leave, payroll, onboarding, attendance, WFH, IT support, reimbursements, policies, and account questions.${roleLine}`;
 }
@@ -369,7 +369,7 @@ function ensureWelcomeMessage(chatLog) {
       ? "\n- How do I manage users and roles?"
       : role === "user"
         ? "\n- How do I raise an IT support ticket?"
-        : "\n- How do I sign up and verify my email?";
+        : "\n- How do I sign up?";
 
   appendMessage(
     chatLog,

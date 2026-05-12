@@ -169,7 +169,7 @@ function renderProfileSummary(user) {
   setText("overviewName", user.name || "Guest User");
   setText("overviewEmail", user.email || "");
   setText("overviewRole", user.role || "User");
-  setText("verifyStatus", user.isVerified ? "Verified" : "Not Verified");
+  setText("verifyStatus", "Account Active");
   setText("infoJobTitle", user.jobTitle || "Not set");
   setText("infoPhone", user.phone || "Not set");
   setText("infoLocation", user.location || "Not set");
