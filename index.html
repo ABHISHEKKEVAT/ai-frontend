@@ -471,37 +471,9 @@
   <script>
     const LOCAL_BACKEND = "http://127.0.0.1:5000";
     const LIVE_BACKEND = "https://ai-backend-1-7kxh.onrender.com";
-    const API_OVERRIDE_KEY = "apiBaseOverride";
-
-    function normalizeBaseUrl(url) {
-      const raw = String(url || "").trim();
-      if (!raw) return "";
-      try {
-        const parsed = new URL(raw);
-        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
-        return parsed.origin;
-      } catch {
-        return "";
-      }
-    }
-
-    function resolveApiBase() {
-      const params = new URLSearchParams(location.search);
-      const queryOverride = normalizeBaseUrl(params.get("api"));
-      if (queryOverride) {
-        localStorage.setItem(API_OVERRIDE_KEY, queryOverride);
-        return queryOverride;
-      }
-
-      const savedOverride = normalizeBaseUrl(localStorage.getItem(API_OVERRIDE_KEY));
-      if (savedOverride) return savedOverride;
-
-      const isLocalhost =
-        location.hostname === "localhost" || location.hostname === "127.0.0.1";
-      return isLocalhost ? LOCAL_BACKEND : LIVE_BACKEND;
-    }
-
-    const API = `${resolveApiBase()}/api`;
+    const isLocalhost =
+      location.hostname === "localhost" || location.hostname === "127.0.0.1";
+    const API = `${isLocalhost ? LOCAL_BACKEND : LIVE_BACKEND}/api`;
 
     const ONBOARDING_STORAGE_KEY = "onboardingChecklistV1";
     const onboardingItems = [
