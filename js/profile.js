@@ -6,13 +6,19 @@ const PROFILE_FIELD_IDS = [
   "pfPhone",
   "pfJobTitle",
   "pfDepartment",
+  "pfTeam",
+  "pfWorkMode",
   "pfLocation",
   "pfEmployeeId",
   "pfManagerName",
+  "pfEmergencyContactName",
+  "pfEmergencyContactPhone",
   "pfJoinDate",
   "pfBio",
   "pfSkills",
-  "pfLinkedinUrl"
+  "pfLinkedinUrl",
+  "pfGithubUrl",
+  "pfPortfolioUrl"
 ];
 
 function escapeHtml(value) {
@@ -87,6 +93,9 @@ function resetProfileUI() {
   setText("infoLocation", "Not set");
   setText("infoManagerName", "Not set");
   setText("infoJoinDate", "Not set");
+  setText("infoTeam", "Not set");
+  setText("infoWorkMode", "Not set");
+  setText("infoEmergencyContact", "Not set");
 
   const profileContent = document.getElementById("profileContent");
   if (profileContent) {
@@ -113,7 +122,13 @@ function updateUserCache(user) {
       avatar: user.avatar || "",
       isVerified: Boolean(user.isVerified),
       department: user.department || "",
-      jobTitle: user.jobTitle || ""
+      jobTitle: user.jobTitle || "",
+      team: user.team || "",
+      workMode: user.workMode || "",
+      emergencyContactName: user.emergencyContactName || "",
+      emergencyContactPhone: user.emergencyContactPhone || "",
+      githubUrl: user.githubUrl || "",
+      portfolioUrl: user.portfolioUrl || ""
     };
     localStorage.setItem("user", JSON.stringify(next));
   } catch (error) {
@@ -126,8 +141,16 @@ function renderProfileContent(user) {
   if (!profileContent) return;
 
   const linkedinUrl = normalizeHttpUrl(user.linkedinUrl);
+  const githubUrl = normalizeHttpUrl(user.githubUrl);
+  const portfolioUrl = normalizeHttpUrl(user.portfolioUrl);
   const linkedin = linkedinUrl
     ? `<a href="${escapeHtml(linkedinUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(linkedinUrl)}</a>`
+    : "Not set";
+  const github = githubUrl
+    ? `<a href="${escapeHtml(githubUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(githubUrl)}</a>`
+    : "Not set";
+  const portfolio = portfolioUrl
+    ? `<a href="${escapeHtml(portfolioUrl)}" target="_blank" rel="noopener noreferrer">${escapeHtml(portfolioUrl)}</a>`
     : "Not set";
 
   profileContent.innerHTML = `
@@ -136,9 +159,14 @@ function renderProfileContent(user) {
     <p><strong>Role:</strong> ${escapeHtml(user.role || "")}</p>
     <p><strong>Job Title:</strong> ${escapeHtml(user.jobTitle || "Not set")}</p>
     <p><strong>Department:</strong> ${escapeHtml(user.department || "Not set")}</p>
+    <p><strong>Team:</strong> ${escapeHtml(user.team || "Not set")}</p>
+    <p><strong>Work Mode:</strong> ${escapeHtml(user.workMode || "Not set")}</p>
     <p><strong>Location:</strong> ${escapeHtml(user.location || "Not set")}</p>
     <p><strong>Employee ID:</strong> ${escapeHtml(user.employeeId || "Not set")}</p>
+    <p><strong>Emergency Contact:</strong> ${escapeHtml(user.emergencyContactName || "Not set")} ${user.emergencyContactPhone ? `(${escapeHtml(user.emergencyContactPhone)})` : ""}</p>
     <p><strong>LinkedIn:</strong> ${linkedin}</p>
+    <p><strong>GitHub:</strong> ${github}</p>
+    <p><strong>Portfolio:</strong> ${portfolio}</p>
   `;
 }
 
@@ -148,13 +176,19 @@ function renderProfileMetrics(user) {
     user.phone,
     user.jobTitle,
     user.department,
+    user.team,
+    user.workMode,
     user.location,
     user.employeeId,
     user.managerName,
+    user.emergencyContactName,
+    user.emergencyContactPhone,
     user.joinDate,
     user.bio,
     user.skills,
     user.linkedinUrl,
+    user.githubUrl,
+    user.portfolioUrl,
     user.avatar
   ];
   const completed = completionFields.filter((v) => normalizeText(v)).length;
@@ -175,6 +209,13 @@ function renderProfileSummary(user) {
   setText("infoLocation", user.location || "Not set");
   setText("infoManagerName", user.managerName || "Not set");
   setText("infoJoinDate", formatDateForDisplay(user.joinDate));
+  setText("infoTeam", user.team || "Not set");
+  setText("infoWorkMode", user.workMode || "Not set");
+  const emergencyContactLine = [user.emergencyContactName, user.emergencyContactPhone]
+    .map((v) => String(v || "").trim())
+    .filter(Boolean)
+    .join(" - ");
+  setText("infoEmergencyContact", emergencyContactLine || "Not set");
 
   const preview = document.getElementById("profilePreview");
   if (preview) {
@@ -187,13 +228,19 @@ function fillProfileForm(user) {
   setInputValue("pfPhone", user.phone || "");
   setInputValue("pfJobTitle", user.jobTitle || "");
   setInputValue("pfDepartment", user.department || "");
+  setInputValue("pfTeam", user.team || "");
+  setInputValue("pfWorkMode", user.workMode || "");
   setInputValue("pfLocation", user.location || "");
   setInputValue("pfEmployeeId", user.employeeId || "");
   setInputValue("pfManagerName", user.managerName || "");
+  setInputValue("pfEmergencyContactName", user.emergencyContactName || "");
+  setInputValue("pfEmergencyContactPhone", user.emergencyContactPhone || "");
   setInputValue("pfJoinDate", formatDateForInput(user.joinDate));
   setInputValue("pfBio", user.bio || "");
   setInputValue("pfSkills", user.skills || "");
   setInputValue("pfLinkedinUrl", user.linkedinUrl || "");
+  setInputValue("pfGithubUrl", user.githubUrl || "");
+  setInputValue("pfPortfolioUrl", user.portfolioUrl || "");
 }
 
 export async function loadProfile() {
@@ -301,13 +348,19 @@ export function initProfileForm() {
     const pfPhone = document.getElementById("pfPhone");
     const pfJobTitle = document.getElementById("pfJobTitle");
     const pfDepartment = document.getElementById("pfDepartment");
+    const pfTeam = document.getElementById("pfTeam");
+    const pfWorkMode = document.getElementById("pfWorkMode");
     const pfLocation = document.getElementById("pfLocation");
     const pfEmployeeId = document.getElementById("pfEmployeeId");
     const pfManagerName = document.getElementById("pfManagerName");
+    const pfEmergencyContactName = document.getElementById("pfEmergencyContactName");
+    const pfEmergencyContactPhone = document.getElementById("pfEmergencyContactPhone");
     const pfJoinDate = document.getElementById("pfJoinDate");
     const pfBio = document.getElementById("pfBio");
     const pfSkills = document.getElementById("pfSkills");
     const pfLinkedinUrl = document.getElementById("pfLinkedinUrl");
+    const pfGithubUrl = document.getElementById("pfGithubUrl");
+    const pfPortfolioUrl = document.getElementById("pfPortfolioUrl");
     const pfAvatarInput = document.getElementById("pfAvatar");
 
     if (!pfName) {
@@ -327,13 +380,19 @@ export function initProfileForm() {
     formData.append("phone", normalizeText(pfPhone?.value));
     formData.append("jobTitle", normalizeText(pfJobTitle?.value));
     formData.append("department", normalizeText(pfDepartment?.value));
+    formData.append("team", normalizeText(pfTeam?.value));
+    formData.append("workMode", normalizeText(pfWorkMode?.value));
     formData.append("location", normalizeText(pfLocation?.value));
     formData.append("employeeId", normalizeText(pfEmployeeId?.value));
     formData.append("managerName", normalizeText(pfManagerName?.value));
+    formData.append("emergencyContactName", normalizeText(pfEmergencyContactName?.value));
+    formData.append("emergencyContactPhone", normalizeText(pfEmergencyContactPhone?.value));
     formData.append("joinDate", normalizeText(pfJoinDate?.value));
     formData.append("bio", normalizeText(pfBio?.value));
     formData.append("skills", normalizeText(pfSkills?.value));
     formData.append("linkedinUrl", normalizeText(pfLinkedinUrl?.value));
+    formData.append("githubUrl", normalizeText(pfGithubUrl?.value));
+    formData.append("portfolioUrl", normalizeText(pfPortfolioUrl?.value));
 
     if (pfAvatarInput?.files?.[0]) {
       formData.append("avatar", pfAvatarInput.files[0]);

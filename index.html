@@ -231,6 +231,7 @@
         <a href="#new-employee" class="btn-primary">Start Onboarding</a>
         <a href="#current-employee" class="btn-secondary">Open Daily Tools</a>
         <a href="about-company.html" class="btn-secondary">About Company</a>
+        <a href="https://site-ro6spzf55.godaddysites.com/" class="btn-secondary" target="_blank" rel="noopener noreferrer">Visit Main Website</a>
       </div>
     </div>
   </div>
@@ -426,38 +427,81 @@
   <div class="popup-bg" id="popupBg" onclick="closePopup()">
     <div class="popup" onclick="event.stopPropagation()">
       <h2 id="popupTitle"></h2>
+      <p class="popup-subtitle" id="popupSubtitle"></p>
 
-      <div id="loginForm" style="display:none;">
-        <input id="liEmail" type="email" placeholder="Email" />
-        <input id="liPassword" type="password" placeholder="Password" />
-        <p style="margin:8px 0 0; text-align:right;">
-          <a href="forgot.html" style="font-size:0.86rem; color:#0a6f71; text-decoration:none;">Request password reset</a>
+      <div id="loginForm" class="auth-form" style="display:none;">
+        <label for="liEmail" class="field-label">Work Email</label>
+        <input id="liEmail" type="email" placeholder="you@company.com" />
+        <label for="liPassword" class="field-label">Password</label>
+        <input id="liPassword" type="password" placeholder="Enter your password" />
+        <p class="auth-note-row">
+          <a href="forgot.html" class="auth-note-link">Request password reset</a>
         </p>
-        <button onclick="handleLogin()" style="width:100%;">Login</button>
+        <button onclick="handleLogin()" class="auth-submit-btn">Login</button>
+        <p class="auth-footer-copy">New here? <a href="#" class="auth-switch-link" onclick="openPopup('signup'); return false;">Sign up</a></p>
       </div>
 
-      <div id="signupForm" style="display:none;">
-        <input id="suName" type="text" placeholder="Full Name" />
-        <input id="suEmail" type="email" placeholder="Email" />
-        <input id="suPassword" type="password" placeholder="Password" />
-        <select id="suRole" aria-label="Signup role">
+      <div id="signupForm" class="auth-form" style="display:none;">
+        <label for="suName" class="field-label">Full Name</label>
+        <input id="suName" type="text" placeholder="Enter your full name" />
+        <label for="suEmail" class="field-label">Email</label>
+        <input id="suEmail" type="email" placeholder="you@company.com" />
+        <label for="suPassword" class="field-label">Password</label>
+        <input id="suPassword" type="password" minlength="8" maxlength="64" placeholder="Create a strong password" />
+        <label for="suConfirmPassword" class="field-label">Confirm Password</label>
+        <input id="suConfirmPassword" type="password" minlength="8" maxlength="64" placeholder="Re-enter your password" />
+        <p class="auth-footer-copy">Use 8-64 chars with uppercase, lowercase, number, and special character.</p>
+        <label for="suRole" class="field-label">Account Role</label>
+        <select id="suRole" aria-label="Signup role" onchange="toggleAdminCodeField()">
           <option value="user" selected>User</option>
           <option value="admin">Admin</option>
         </select>
-        <button onclick="handleSignup()" style="width:100%;">Sign Up</button>
+        <div id="adminCodeWrap" style="display:none;">
+          <label for="suAdminCode" class="field-label">Admin Verification Code</label>
+          <input id="suAdminCode" type="password" placeholder="Enter admin verification code" />
+        </div>
+        <button onclick="handleSignup()" class="auth-submit-btn">Create Account</button>
+        <p class="auth-footer-copy">Already have an account? <a href="#" class="auth-switch-link" onclick="openPopup('login'); return false;">Login</a></p>
       </div>
 
-      <br />
-      <button onclick="closePopup()" style="width:100%;">Close</button>
+      <button onclick="closePopup()" class="auth-close-btn">Close</button>
     </div>
   </div>
 
   <script>
-    const isLocalhost =
-      location.hostname === "localhost" || location.hostname === "127.0.0.1";
-    const API = isLocalhost
-      ? "http://127.0.0.1:10000/api"
-      : "https://ai-backend-1-7kxh.onrender.com/api";
+    const LOCAL_BACKEND = "http://127.0.0.1:5000";
+    const LIVE_BACKEND = "https://ai-backend-1-7kxh.onrender.com";
+    const API_OVERRIDE_KEY = "apiBaseOverride";
+
+    function normalizeBaseUrl(url) {
+      const raw = String(url || "").trim();
+      if (!raw) return "";
+      try {
+        const parsed = new URL(raw);
+        if (parsed.protocol !== "http:" && parsed.protocol !== "https:") return "";
+        return parsed.origin;
+      } catch {
+        return "";
+      }
+    }
+
+    function resolveApiBase() {
+      const params = new URLSearchParams(location.search);
+      const queryOverride = normalizeBaseUrl(params.get("api"));
+      if (queryOverride) {
+        localStorage.setItem(API_OVERRIDE_KEY, queryOverride);
+        return queryOverride;
+      }
+
+      const savedOverride = normalizeBaseUrl(localStorage.getItem(API_OVERRIDE_KEY));
+      if (savedOverride) return savedOverride;
+
+      const isLocalhost =
+        location.hostname === "localhost" || location.hostname === "127.0.0.1";
+      return isLocalhost ? LOCAL_BACKEND : LIVE_BACKEND;
+    }
+
+    const API = `${resolveApiBase()}/api`;
 
     const ONBOARDING_STORAGE_KEY = "onboardingChecklistV1";
     const onboardingItems = [
@@ -494,8 +538,13 @@
     function openPopup(type) {
       document.getElementById("popupBg").style.display = "flex";
       document.getElementById("popupTitle").textContent = type === "login" ? "Login" : "Sign Up";
+      document.getElementById("popupSubtitle").textContent =
+        type === "login"
+          ? "Welcome back. Access your employee workspace."
+          : "Create your account to get started in minutes.";
       document.getElementById("loginForm").style.display = type === "login" ? "block" : "none";
       document.getElementById("signupForm").style.display = type === "signup" ? "block" : "none";
+      if (type === "signup") toggleAdminCodeField();
     }
 
     function closePopup() {
@@ -521,6 +570,43 @@
       return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i.test(String(email || "").trim());
     }
 
+    function validatePasswordPolicy(password) {
+      const value = String(password || "");
+
+      if (value.length < 8 || value.length > 64) {
+        return "Password must be 8-64 characters and include uppercase, lowercase, number, and special character.";
+      }
+      if (/\s/.test(value)) {
+        return "Password cannot contain spaces.";
+      }
+      if (!/[a-z]/.test(value)) {
+        return "Password must include at least one lowercase letter.";
+      }
+      if (!/[A-Z]/.test(value)) {
+        return "Password must include at least one uppercase letter.";
+      }
+      if (!/[0-9]/.test(value)) {
+        return "Password must include at least one number.";
+      }
+      if (!/[^A-Za-z0-9]/.test(value)) {
+        return "Password must include at least one special character.";
+      }
+
+      return "";
+    }
+
+    function toggleAdminCodeField() {
+      const roleSelect = document.getElementById("suRole");
+      const adminCodeWrap = document.getElementById("adminCodeWrap");
+      const adminCodeInput = document.getElementById("suAdminCode");
+      if (!roleSelect || !adminCodeWrap || !adminCodeInput) return;
+
+      const isAdmin = roleSelect.value === "admin";
+      adminCodeWrap.style.display = isAdmin ? "block" : "none";
+      adminCodeInput.required = isAdmin;
+      if (!isAdmin) adminCodeInput.value = "";
+    }
+
     let isSignupSubmitting = false;
 
     /* SIGNUP */
@@ -530,16 +616,31 @@
       const name = document.getElementById("suName").value.trim();
       const email = document.getElementById("suEmail").value.trim().toLowerCase();
       const password = document.getElementById("suPassword").value;
+      const confirmPassword = document.getElementById("suConfirmPassword").value;
       const roleValue = document.getElementById("suRole")?.value || "user";
       const role = roleValue === "admin" ? "admin" : "user";
+      const adminCode = String(document.getElementById("suAdminCode")?.value || "").trim();
       const signupSubmitBtn = document.querySelector("#signupForm button");
 
-      if (!name || !email || !password) {
+      if (!name || !email || !password || !confirmPassword) {
         alert("Please fill all signup fields");
+        return;
+      }
+      if (password !== confirmPassword) {
+        alert("Password and confirm password must match.");
         return;
       }
       if (!isValidEmail(email)) {
         alert("Please enter a valid email address (example: name@gmail.com).");
+        return;
+      }
+      const passwordPolicyError = validatePasswordPolicy(password);
+      if (passwordPolicyError) {
+        alert(passwordPolicyError);
+        return;
+      }
+      if (role === "admin" && !adminCode) {
+        alert("Admin verification code is required for admin account signup.");
         return;
       }
 
@@ -553,11 +654,37 @@
         const res = await fetch(`${API}/auth/signup`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password, role })
+          body: JSON.stringify({ name, email, password, role, adminCode })
         });
 
         const data = await res.json();
-        alert(data.msg || "Signup successful");
+        if (!res.ok) {
+          alert(data.msg || "Signup failed");
+          return;
+        }
+
+        const loginRes = await fetch(`${API}/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+        const loginData = await loginRes.json().catch(() => ({}));
+
+        if (!loginRes.ok) {
+          alert(`${data.msg || "Signup successful"} Please login manually.`);
+          document.getElementById("liEmail").value = email;
+          openPopup("login");
+          return;
+        }
+
+        localStorage.setItem("token", loginData.token);
+        localStorage.setItem("user", JSON.stringify(loginData.user));
+        alert(`${data.msg || "Signup successful"} Logged in successfully.`);
+        closePopup();
+        loadAdminPanel();
+        renderPersonalizedWelcome();
+        updateAuthUI();
+        if (window.refreshChatSuggestions) window.refreshChatSuggestions();
       } catch (error) {
         alert("Signup failed");
         console.error(error);
@@ -565,7 +692,7 @@
         isSignupSubmitting = false;
         if (signupSubmitBtn) {
           signupSubmitBtn.disabled = false;
-          signupSubmitBtn.textContent = "Sign Up";
+          signupSubmitBtn.textContent = "Create Account";
         }
       }
     }
@@ -668,8 +795,9 @@
                 <div class="admin-reset-row">
                   <input
                     type="password"
-                    minlength="6"
-                    placeholder="Set new password (min 6 characters)"
+                    minlength="8"
+                    maxlength="64"
+                    placeholder="Set strong password (8-64, upper/lower/number/special)"
                     data-reset-password="${escapeHtml(u._id || "")}"
                   />
                   <button
@@ -694,8 +822,9 @@
             const input = userList.querySelector(`[data-reset-password="${userId}"]`);
             const password = input ? String(input.value || "") : "";
 
-            if (password.length < 6) {
-              alert("Password must be at least 6 characters.");
+            const passwordPolicyError = validatePasswordPolicy(password);
+            if (passwordPolicyError) {
+              alert(passwordPolicyError);
               return;
             }
 

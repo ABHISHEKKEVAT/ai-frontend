@@ -15,6 +15,31 @@ function formatDateTime(value) {
   return date.toLocaleString();
 }
 
+function validatePasswordPolicy(password) {
+  const value = String(password || "");
+
+  if (value.length < 8 || value.length > 64) {
+    return "Password must be 8-64 characters and include uppercase, lowercase, number, and special character.";
+  }
+  if (/\s/.test(value)) {
+    return "Password cannot contain spaces.";
+  }
+  if (!/[a-z]/.test(value)) {
+    return "Password must include at least one lowercase letter.";
+  }
+  if (!/[A-Z]/.test(value)) {
+    return "Password must include at least one uppercase letter.";
+  }
+  if (!/[0-9]/.test(value)) {
+    return "Password must include at least one number.";
+  }
+  if (!/[^A-Za-z0-9]/.test(value)) {
+    return "Password must include at least one special character.";
+  }
+
+  return "";
+}
+
 export async function loadAdmin() {
   const token = localStorage.getItem("token");
   const user = JSON.parse(localStorage.getItem("user") || "{}");
@@ -48,7 +73,7 @@ export async function loadAdmin() {
           <p>${escapeHtml(u.email || "")} - ${escapeHtml(u.role || "user")}</p>
           ${u.resetRequestedAt ? `<p>Reset requested: ${escapeHtml(formatDateTime(u.resetRequestedAt))}</p>` : ""}
           <div style="display:flex; gap:8px; flex-wrap:wrap; margin-top:8px;">
-            <input type="password" minlength="6" placeholder="New password" data-reset-password="${escapeHtml(u._id || "")}" />
+            <input type="password" minlength="8" maxlength="64" placeholder="New password (8-64, upper/lower/number/special)" data-reset-password="${escapeHtml(u._id || "")}" />
             <button type="button" class="btn-secondary" data-reset-user="${escapeHtml(u._id || "")}">
               Reset Password
             </button>
@@ -63,8 +88,9 @@ export async function loadAdmin() {
         const passwordInput = userList.querySelector(`[data-reset-password="${userId}"]`);
         const password = String(passwordInput?.value || "");
 
-        if (password.length < 6) {
-          alert("Password must be at least 6 characters.");
+        const passwordPolicyError = validatePasswordPolicy(password);
+        if (passwordPolicyError) {
+          alert(passwordPolicyError);
           return;
         }
 

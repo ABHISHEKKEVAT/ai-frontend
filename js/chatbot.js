@@ -360,26 +360,6 @@ export function refreshChatSuggestions() {
   renderSuggestionChips();
 }
 
-function ensureWelcomeMessage(chatLog) {
-  if (!chatLog || chatLog.dataset.welcomeShown === "true") return;
-  const role = getCurrentUserRole();
-
-  const roleLine =
-    role === "admin"
-      ? "\n- How do I manage users and roles?"
-      : role === "user"
-        ? "\n- How do I raise an IT support ticket?"
-        : "\n- How do I sign up?";
-
-  appendMessage(
-    chatLog,
-    "AI",
-    `Welcome! I can help new employees quickly.\nTry asking:\n- ${COMMON_SUGGESTIONS.join("\n- ")}${roleLine}`
-  );
-
-  chatLog.dataset.welcomeShown = "true";
-}
-
 export function initChatSuggestions() {
   const chipBox = document.getElementById("chatSuggestions");
   const userInput = document.getElementById("userInput");
@@ -387,8 +367,11 @@ export function initChatSuggestions() {
 
   if (!chipBox || !userInput) return;
 
+  if (chatLog && !chatLog.innerHTML.trim()) {
+    appendMessage(chatLog, "AI", "Welcome! Try asking anything.");
+  }
+
   renderSuggestionChips();
-  ensureWelcomeMessage(chatLog);
 
   chipBox.addEventListener("click", (e) => {
     const target = e.target.closest(".chat-chip");
@@ -406,7 +389,6 @@ export async function sendMessage() {
   const token = localStorage.getItem("token");
 
   if (!userInput || !chatLog) return;
-  ensureWelcomeMessage(chatLog);
 
   const text = userInput.value.trim();
   if (!text) return;

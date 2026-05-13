@@ -138,6 +138,18 @@
               <span class="info-value" id="infoManagerName">Not set</span>
             </div>
             <div class="info-item">
+              <span class="info-label">Team</span>
+              <span class="info-value" id="infoTeam">Not set</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Work Mode</span>
+              <span class="info-value" id="infoWorkMode">Not set</span>
+            </div>
+            <div class="info-item">
+              <span class="info-label">Emergency Contact</span>
+              <span class="info-value" id="infoEmergencyContact">Not set</span>
+            </div>
+            <div class="info-item">
               <span class="info-label">Join Date</span>
               <span class="info-value" id="infoJoinDate">Not set</span>
             </div>
@@ -180,12 +192,28 @@
             <input type="text" id="pfDepartment" placeholder="Engineering" />
           </div>
           <div class="form-field">
+            <label for="pfTeam">Team</label>
+            <input type="text" id="pfTeam" placeholder="Platform Team" />
+          </div>
+          <div class="form-field">
+            <label for="pfWorkMode">Work Mode</label>
+            <input type="text" id="pfWorkMode" placeholder="Hybrid / Remote / Onsite" />
+          </div>
+          <div class="form-field">
             <label for="pfEmployeeId">Employee ID</label>
             <input type="text" id="pfEmployeeId" placeholder="EMP-1024" />
           </div>
           <div class="form-field">
             <label for="pfManagerName">Manager Name</label>
             <input type="text" id="pfManagerName" placeholder="Manager full name" />
+          </div>
+          <div class="form-field">
+            <label for="pfEmergencyContactName">Emergency Contact Name</label>
+            <input type="text" id="pfEmergencyContactName" placeholder="Contact person name" />
+          </div>
+          <div class="form-field">
+            <label for="pfEmergencyContactPhone">Emergency Contact Phone</label>
+            <input type="text" id="pfEmergencyContactPhone" placeholder="+1 555 111 2222" />
           </div>
           <div class="form-field">
             <label for="pfLocation">Location</label>
@@ -198,6 +226,14 @@
           <div class="form-field form-field-full">
             <label for="pfLinkedinUrl">LinkedIn URL</label>
             <input type="url" id="pfLinkedinUrl" placeholder="https://linkedin.com/in/your-profile" />
+          </div>
+          <div class="form-field form-field-full">
+            <label for="pfGithubUrl">GitHub URL</label>
+            <input type="url" id="pfGithubUrl" placeholder="https://github.com/your-handle" />
+          </div>
+          <div class="form-field form-field-full">
+            <label for="pfPortfolioUrl">Portfolio URL</label>
+            <input type="url" id="pfPortfolioUrl" placeholder="https://yourportfolio.com" />
           </div>
           <div class="form-field form-field-full">
             <label for="pfSkills">Skills</label>
@@ -236,7 +272,8 @@
       <div id="signupForm" style="display: none;">
         <input id="suName" type="text" placeholder="Full Name" />
         <input id="suEmail" type="email" placeholder="Email" />
-        <input id="suPassword" type="password" placeholder="Password" />
+        <input id="suPassword" type="password" minlength="8" maxlength="64" placeholder="Password (8-64, upper/lower/number/special)" />
+        <input id="suConfirmPassword" type="password" minlength="8" maxlength="64" placeholder="Confirm Password" />
         <button type="button" id="signupSubmitBtn" class="popup-main-btn">Sign Up</button>
       </div>
 
